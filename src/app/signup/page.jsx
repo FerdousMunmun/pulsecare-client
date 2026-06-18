@@ -35,8 +35,8 @@ export default function SignUpPage() {
       <Surface className="w-full">
         <Form onSubmit={onSubmit}>
           <Fieldset className="w-full">
-            <Fieldset.Legend>Signup</Fieldset.Legend>
-            <Description>Create your account</Description>
+            <Fieldset.Legend className="text-center font-bold">SignUp</Fieldset.Legend>
+            <Description className="text-center text-2xl">Create your account</Description>
             <Fieldset.Group>
               <TextField isRequired name="name">
                 <Label>Name</Label>
@@ -44,11 +44,6 @@ export default function SignUpPage() {
                 <FieldError />
               </TextField>
 
-              <TextField name="image" type="url">
-                <Label>Image URL</Label>
-                <Input placeholder="Image URL" variant="secondary" />
-                <FieldError />
-              </TextField>
               <TextField isRequired name="email" type="email">
                 <Label>Email</Label>
                 <Input placeholder="john@example.com" variant="secondary" />
@@ -69,12 +64,12 @@ export default function SignUpPage() {
                 </Select.Trigger>
                 <Select.Popover>
                   <ListBox>
-                    <ListBox.Item id="buyer" textValue="buyer">
-                      Buyer
+                    <ListBox.Item id="Donor" textValue="Donor">
+                      Doner
                       <ListBox.ItemIndicator />
                     </ListBox.Item>
-                    <ListBox.Item id="seller" textValue="seller">
-                      Seller
+                    <ListBox.Item id="Volunteer" textValue="Volunteer">
+                      Volunteer
                       <ListBox.ItemIndicator />
                     </ListBox.Item>
                   </ListBox>
@@ -82,8 +77,8 @@ export default function SignUpPage() {
               </Select>
             </Fieldset.Group>
 
-            <Button type="submit" className={"w-full"}>
-              Signup
+            <Button type="submit" className={"w-full bg-red-800"}>
+              Sign Up
             </Button>
           </Fieldset>
         </Form>

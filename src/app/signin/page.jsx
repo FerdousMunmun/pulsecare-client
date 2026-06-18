@@ -33,8 +33,8 @@ export default function SignInPage() {
       <Surface className="w-full">
         <Form onSubmit={onSubmit}>
           <Fieldset className="w-full">
-            <Fieldset.Legend>Signup</Fieldset.Legend>
-            <Description>Create your account</Description>
+            <Fieldset.Legend className="font-bold text-center">Login</Fieldset.Legend>
+            <Description className="text-2xl text-center">Create your account</Description>
             <Fieldset.Group>
               <TextField isRequired name="email" type="email">
                 <Label>Email</Label>
@@ -49,8 +49,8 @@ export default function SignInPage() {
               </TextField>
             </Fieldset.Group>
 
-            <Button type="submit" className={"w-full"}>
-              Signin
+            <Button type="submit" className={"w-full bg-red-800"}>
+              Login
             </Button>
           </Fieldset>
         </Form>

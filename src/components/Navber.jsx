@@ -7,6 +7,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 import { BiLogOut } from "react-icons/bi";
+import { LuHeartPulse } from "react-icons/lu";
 import { CgProfile } from "react-icons/cg";
 import { MdDashboard } from "react-icons/md";
 
@@ -69,14 +70,10 @@ const Navbar = () => {
             </button>
             <Link href={'/'}>
               <div className="flex items-center gap-3">
-                <Image
-                  height={40}
-                  width={40}
-                  loading="eager"
-                  src="/logo.webp"
-                  alt="logo"
-                />
-                <p className="font-bold">Tech Bazaar</p>
+               <LuHeartPulse className=" text-3xl text-red-800"/>
+                <p className="text-2xl font-bold text-yellow-500">Pulse
+                    <span className="text-3xl font-bold text-red-800">Care</span>
+                </p>
               </div>
             </Link>
           </div>
@@ -84,21 +81,21 @@ const Navbar = () => {
             <li>
               <Link
                 href="/products"
-                className="font-medium text-accent"
+                 className="hover:text-red-800 font-medium text-medium"
                 aria-current="page"
               >
-                Browse Products
+                Donation Requests
               </Link>
             </li>
-            <li>
-              <Link href="/pricing">Pricing</Link>
+            <li className="hover:text-red-800 font-medium text-medium">
+              <Link href="/pricing">Funding</Link>
             </li>
           </ul>
          {!user && (
-            <div className="hidden items-center gap-4 md:flex">
+            <div className="hidden items-center gap-4 md:flex  font-medium hover:text-red-800">
               <Link href="/signin">Login</Link>
               <Link href="/signup">
-                <Button>Sign Up</Button>
+                <Button variant="outline" className={`font-medium hover:text-red-800`}>Sign Up</Button>
               </Link>
             </div>
           )}
@@ -199,3 +196,7 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+
+
+
