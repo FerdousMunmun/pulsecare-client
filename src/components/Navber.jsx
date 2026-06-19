@@ -2,7 +2,7 @@
 
 import { authClient } from "@/lib/auth-client";
 import { Avatar, Button, Dropdown, Label } from "@heroui/react";
-import Image from "next/image";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
@@ -18,6 +18,7 @@ const Navbar = () => {
   const user = session?.user;
 
   const pathname = usePathname()
+  const role = user?.role?.toLowerCase() || "donor";
   if(pathname.includes('dashboard')){
     return null;
   }
@@ -70,17 +71,14 @@ const Navbar = () => {
             </button>
             <Link href={'/'}>
               <div className="flex items-center gap-3">
-               <LuHeartPulse className=" text-3xl text-red-800"/>
-                <p className="text-2xl font-bold text-yellow-500">Pulse
-                    <span className="text-3xl font-bold text-red-800">Care</span>
-                </p>
+               
               </div>
             </Link>
           </div>
           <ul className="hidden items-center gap-4 md:flex">
             <li>
               <Link
-                href="/products"
+                href="/donation-request"
                  className="hover:text-red-800 font-medium text-medium"
                 aria-current="page"
               >
@@ -108,9 +106,9 @@ const Navbar = () => {
                     <Avatar.Image
                       referrerPolicy="no-referrer"
                       alt="John Doe"
-                      src={user?.image}
+                      src={user?.image || "/default-avatar.png"}
                     />
-                    <Avatar.Fallback>{user.name.charAt(0)}</Avatar.Fallback>
+                    <Avatar.Fallback>{user?.name?.charAt(0) || "U"}</Avatar.Fallback>
                   </Avatar>
                 </Dropdown.Trigger>
                 <Dropdown.Popover>
@@ -136,7 +134,7 @@ const Navbar = () => {
                     <Dropdown.Item id="new-file" textValue="New file">
                       <Link
                         className="flex items-center gap-2"
-                        href={`/dashboard/${user?.role}`}
+                        href={`/dashboard/${role}`}
                       >
                         <MdDashboard />
                         <Label>Dashboard</Label>
@@ -168,7 +166,7 @@ const Navbar = () => {
             <ul className="flex flex-col gap-2 p-4">
               <li>
                 <Link href="#" className="block py-2">
-                  Features
+                  Donation Request
                 </Link>
               </li>
               <li>
@@ -178,7 +176,7 @@ const Navbar = () => {
               </li>
               <li>
                 <Link href="#" className="block py-2">
-                  Pricing
+                  Funding
                 </Link>
               </li>
               <li className="mt-4 flex flex-col gap-2 border-t border-separator pt-4">

@@ -65,7 +65,7 @@ export default function SignUpPage() {
                 <Select.Popover>
                   <ListBox>
                     <ListBox.Item id="Donor" textValue="Donor">
-                      Doner
+                      Donor
                       <ListBox.ItemIndicator />
                     </ListBox.Item>
                     <ListBox.Item id="Volunteer" textValue="Volunteer">

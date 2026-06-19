@@ -1,105 +1,86 @@
+
+
+
+
 import { auth } from "@/lib/auth";
-import {
-  Bars,
-  Bell,
-  Envelope,
-  Gear,
-  House,
-  Magnifier,
-  Person,
-} from "@gravity-ui/icons";
-import { Button, Drawer } from "@heroui/react";
-import { ChartArea, User2 } from "lucide-react";
+import {Bars,  House, } from "@gravity-ui/icons";
+import {Button, Drawer} from "@heroui/react";
 import { headers } from "next/headers";
-import Image from "next/image";
 import Link from "next/link";
-import { BiMoney } from "react-icons/bi";
-import { TbAsset } from "react-icons/tb";
+import { LuHeartPulse } from "react-icons/lu";
 
 export default async function DashboardSidebar() {
+
   const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+    headers: await headers()
+  })
 
-  const user = session?.user;
-  const role = user?.role || "buyer";
-  // console.log(user)
-  const daashboardItems = {
-    donor: [
-      { icon: ChartArea, label: "Overview", link: "/dashboard/donor" },
-      { icon: TbAsset, label: "Products", link: "/dashboard/seller/products" },
-      {
-        icon: BiMoney,
-        label: "Transaction",
-        link: "/dashboard/donor/transaction",
-      },
-    ],
+  const user = session?.user
+const role = (user?.role || "donor").toLowerCase();
 
-    volunteer: [
-      { icon: ChartArea, label: "Overview", link: "/dashboard/volunteer" },
-      { icon: TbAsset, label: "Products", link: "/dashboard/volunteer/products" },
-      {
-        icon: BiMoney,
-        label: "Transaction",
-        link: "/dashboard/volunteer/transaction",
-      },
-    ],
+ // console.log(user)
 
-    admin: [
-      { icon: ChartArea, label: "Overview", link: "/dashboard/buyer" },
-      { icon: User2, label: "User Manage", link: "/dashboard/buyer/products" },
-      {
-        icon: BiMoney,
-        label: "Transaction",
-        link: "/dashboard/buyer/transaction",
-      },
-    ],
-  };
+const dashboardItems = {
+  donor: [
+     {icon: House, label: "Dashboard", link: '/dashboard/donor'},
+     {icon: House, label: "My Profile", link:'/dashboard/donor/profile'},
+     {icon: House, label: "My Donation Requests", link:'/dashboard/donor/my-donation-request'},
+     {icon: House, label: "Create Donation Request", link:'/dashboard/donor/create-donation-request'},
+  ],
+  volunteer: [
+     {icon: House, label: "Dashboard", link: '/dashboard/volunteer'},
+     {icon: House, label: "My Profile", link:'/dashboard/volunteer/profile'},
+     {icon: House, label: "My Donation Requests", link:'/dashboard/volunteer/my-donation-request'},
+     {icon: House, label: "Create Donation Request", link:'/dashboard/volunteer/create-donation-request'},
+     {icon: House, label: "All Blood Donation Request", link:'/dashboard/volunteer/all-blood-donation-request'},
+  ],
+  admin: [
+     {icon: House, label: "Dashboard", link: '/dashboard/admin'},
+     {icon: House, label: "My Profile", link:'/dashboard/admin/profile'},
+     {icon: House, label: "My Donation Requests", link:'/dashboard/admin/my-donation-request'},
+     {icon: House, label: "Create Donation Request", link:'/dashboard/admin/create-donation-request'},
+     {icon: House, label: "All Blood Donation Request", link:'/dashboard/admin/all-blood-donation-request'},
+     {icon: House, label: "All Users Page", link:'/dashboard/admin/all-users'},
+  ],
+}
+const navItems = dashboardItems[user?.role?.toLowerCase() || "donor"] || [];
 
-  const navItems = daashboardItems[role];
+console.log (navItems)
 
-  //   console.log(navItems)
-  // //   const navItems = [
-  // //     { icon: House, label: "Home" },
-  // //     { icon: Magnifier, label: "Search" },
-  // //     { icon: Bell, label: "Notifications" },
-  // //     { icon: Envelope, label: "Messages" },
-  // //     { icon: Person, label: "Profile" },
-  // //     { icon: Gear, label: "Settings" },
-  // //   ];
 
   return (
     <Drawer>
-      <Button className={"hidden "} variant="secondary">
+      <Button className={'hidden'} variant="secondary">
         <Bars />
         Menu
       </Button>
 
-      <nav className="flex flex-col gap-1 w-[200px] border border-right-1">
-        <div className="border-b  py-3">
-          <Image
-            src={"/logo-xl.png"}
-            height={"100"}
-            width={"100"}
-            className="h-10 w-full object-cover"
-            alt=""
-          />
+      <nav className="flex flex-col gap-1 w-[250px] border border-right-1 ">
+
+
+         <div className="flex flex-col mb-4">
+    
+    <p className="font-bold text-red-600 capitalize">
+      {role}
+    </p>
+  </div>
+        <div className="flex gap-2  items-center">
+          <LuHeartPulse className=" text-3xl text-red-800 pt-1"/>
+                <p className="text-2xl font-bold text-yellow-500">Pulse
+                    <span className="text-3xl font-bold text-red-800">Care</span>
+                </p>
         </div>
-
         {navItems.map((item) => (
-          <Link key={item.label} href={item.link}>
-            <button
-              key={item.label}
-              className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-foreground transition-colors hover:bg-default"
-              type="button"
-            >
-              <item.icon className="size-5 text-muted" />
-              {item.label}
-            </button>
-          </Link>
-        ))}
-      </nav>
-
+                  <button
+                    key={item.label}
+                    className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-foreground transition-colors hover:bg-default"
+                    type="button"
+                  >
+                    <item.icon className="size-5 text-muted" />
+                    {item.label}
+                  </button>
+                ))}
+              </nav>
       <Drawer.Backdrop>
         <Drawer.Content placement="left">
           <Drawer.Dialog>
@@ -108,7 +89,7 @@ export default async function DashboardSidebar() {
               <Drawer.Heading>Navigation</Drawer.Heading>
             </Drawer.Header>
             <Drawer.Body>
-              <nav className="flex flex-col gap-1">
+               <nav className="flex flex-col gap-1">
                 {navItems.map((item) => (
                   <Link key={item.label} href={item.link}>
                     <button
