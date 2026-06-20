@@ -71,7 +71,10 @@ const Navbar = () => {
             </button>
             <Link href={'/'}>
               <div className="flex items-center gap-3">
-               
+               <LuHeartPulse className=" text-3xl text-red-800 pt-1"/>
+                <p className="text-2xl font-bold text-yellow-500">Pulse
+                    <span className="text-3xl font-bold text-red-800">Care</span>
+                </p>
               </div>
             </Link>
           </div>
@@ -86,7 +89,10 @@ const Navbar = () => {
               </Link>
             </li>
             <li className="hover:text-red-800 font-medium text-medium">
-              <Link href="/pricing">Funding</Link>
+              <Link href="/funding">Funding</Link>
+            </li>
+            <li className="hover:text-red-800 font-medium text-medium">
+              <Link href="/registration">Registration</Link>
             </li>
           </ul>
          {!user && (
@@ -110,6 +116,7 @@ const Navbar = () => {
                     />
                     <Avatar.Fallback>{user?.name?.charAt(0) || "U"}</Avatar.Fallback>
                   </Avatar>
+      
                 </Dropdown.Trigger>
                 <Dropdown.Popover>
                   <div className="px-3 pt-3 pb-1">

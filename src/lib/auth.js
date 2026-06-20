@@ -19,11 +19,28 @@ export const auth = betterAuth({
   user:{
     additionalFields:{
       role:{
+          type: "string",
         defaultValue: "donor" //Doner,volunteer,admin
       },
       plan:{
+          type: "string",
         defaultValue: 'free' //free,pro
-      }
+      },status: {
+  type: "string",
+  defaultValue: "active",
+},
+bloodGroup: {
+  type: "string",
+},
+district: {
+  type: "string",
+},
+upazila: {
+  type: "string",
+},
+image: {
+  type: "string",
+},
 
     }
   } ,

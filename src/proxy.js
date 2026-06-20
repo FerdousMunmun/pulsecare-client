@@ -6,9 +6,13 @@ import { headers } from 'next/headers'
 export async function proxy(request) {
 const session = await auth.api.getSession({
     headers: await headers()
+    
 })
- if(session?.user?.role == "donor" && session?.user?.plan === "free") {
-    return NextResponse.redirect(new URL('/funding', request.url))
+console.log(session);
+ if(session?.user?.role?.toLowerCase() === "donor" &&
+  session?.user?.plan === "free" )
+  {
+    return NextResponse.redirect(new URL('/registration', request.url))
    }
 
    if(!session){
