@@ -20,33 +20,29 @@ const [loading, setLoading] = useState(false);
 
 // Load Districts From Backend
 useEffect(() => {
-fetch("http://localhost:5000/districts")
-.then((res) => res.json())
-.then((data) => setDistricts(data))
-.catch(console.error);
+  fetch("http://localhost:5000/districts")
+    .then((res) => res.json())
+    .then((data) => setDistricts(data));
 }, []);
 
 // Load Upazila By District
 const handleDistrictChange = async (e) => {
-const districtId = e.target.value;
+  const districtId = e.target.value;
 
+  const res = await fetch(
+    `http://localhost:5000/districts/${districtId}/upazilas`
+  );
 
-const res = await fetch(
-  `http://localhost:5000/districts/${districtId}/upazilas`
-);
+  const data = await res.json();
 
-const data = await res.json();
-
-setUpazilas(data);
-
-
+  setUpazilas(data);
 };
 
 const onSubmit = async (e) => {
 e.preventDefault();
 setLoading(true);
 
-```
+
 try {
   const formData = new FormData(e.currentTarget);
 
@@ -108,7 +104,7 @@ try {
 } finally {
   setLoading(false);
 }
-```
+
 
 };
 
