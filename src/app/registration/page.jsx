@@ -126,12 +126,12 @@ if (role === "donor") {
 
 };
 
-return ( <div className="max-w-3xl mx-auto mt-10 border rounded-3xl p-8 shadow-lg"> 
+return ( <div className="max-w-3xl mx-auto mt-10 border rounded-3xl p-4 shadow-lg"> 
 <Surface> 
   <form onSubmit={onSubmit}> <Fieldset className="w-full">
 
 
-        <Fieldset.Legend className="text-center text-3xl font-bold">
+        <Fieldset.Legend className="text-center text-2xl  text-red-800 font-bold">
           Blood Donation Registration
         </Fieldset.Legend>
 
@@ -265,7 +265,7 @@ return ( <div className="max-w-3xl mx-auto mt-10 border rounded-3xl p-8 shadow-l
         <Button
           type="submit"
           isDisabled={loading}
-          className="w-full mt-5 bg-red-600 text-white"
+          className="w-full mt-5 bg-red-800 text-white"
         >
           {loading ? "Creating Account..." : "Register"}
         </Button>

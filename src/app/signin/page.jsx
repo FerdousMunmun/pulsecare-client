@@ -56,7 +56,7 @@ export default function SignInPage() {
             <p className="text-center mt-4">
   Don't have an account?{" "}
   <a
-    href="/signup"
+    href="/registration"
     className="text-red-600 font-semibold hover:underline"
   >
     Sign Up

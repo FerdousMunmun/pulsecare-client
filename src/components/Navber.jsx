@@ -100,9 +100,9 @@ const Navbar = () => {
          {!user && (
             <div className="hidden items-center gap-4 md:flex  font-medium hover:text-red-800">
               <Link href="/signin">Login</Link>
-              <Link href="/signup">
+              {/* <Link href="/signup">
                 <Button variant="outline" className={`font-medium hover:text-red-800`}>Sign Up</Button>
-              </Link>
+              </Link> */}
             </div>
           )}
 

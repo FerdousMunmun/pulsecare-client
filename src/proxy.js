@@ -17,5 +17,9 @@ console.log(session);
 }
  
 export const config = {
-  matcher: ['/profile' ,'/dashboard/donor']
-}
+  matcher: [
+    "/profile",
+    "/dashboard/donor",
+    "/dashboard/:path*",
+  ],
+};

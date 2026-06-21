@@ -27,7 +27,11 @@ export default function SignUpPage() {
       plan: 'free',
     });
 
-    redirect('/')
+   if (user.role === "Donor") {
+  window.location.href = "/dashboard/donor";
+} else {
+  window.location.href = "/dashboard/volunteer";
+}
   };
 
   return (
@@ -35,14 +39,14 @@ export default function SignUpPage() {
       <Surface className="w-full">
         <Form onSubmit={onSubmit}>
           <Fieldset className="w-full">
-            <Fieldset.Legend className="text-center font-bold">SignUp</Fieldset.Legend>
-            <Description className="text-center text-2xl">Create your account</Description>
+            <Fieldset.Legend className="text-center font-bold">Login</Fieldset.Legend>
+            {/* <Description className="text-center text-2xl">Create your account?</Description> */}
             <Fieldset.Group>
-              <TextField isRequired name="name">
+              {/* <TextField isRequired name="name">
                 <Label>Name</Label>
                 <Input placeholder="John Doe" variant="secondary" />
                 <FieldError />
-              </TextField>
+              </TextField> */}
 
               <TextField isRequired name="email" type="email">
                 <Label>Email</Label>
@@ -55,44 +59,23 @@ export default function SignUpPage() {
                 <Input placeholder="Password" variant="secondary" />
                 <FieldError />
               </TextField>
-
-              <Select isRequired name="role" placeholder="Select one">
-                <Label>Signup As</Label>
-                <Select.Trigger>
-                  <Select.Value />
-                  <Select.Indicator />
-                </Select.Trigger>
-                <Select.Popover>
-                  <ListBox>
-                    <ListBox.Item id="Donor" textValue="Donor">
-                      Donor
-                      <ListBox.ItemIndicator />
-                    </ListBox.Item>
-                    <ListBox.Item id="Volunteer" textValue="Volunteer">
-                      Volunteer
-                      <ListBox.ItemIndicator />
-                    </ListBox.Item>
-                  </ListBox>
-                </Select.Popover>
-              </Select>
             </Fieldset.Group>
 
             <Button type="submit" className={"w-full bg-red-800"}>
-              Sign Up
+              Login
             </Button>
 
             {/* new code added */}
 
 <p className="text-center mt-4">
-  Don't have an account?{" "}
+  Already have an account?{" "}
   <a
     href="/registration"
     className="text-red-600 font-semibold hover:underline"
   >
-    Register
+    Registration
   </a>
 </p>
-
             {/* new code added */}
 
 
