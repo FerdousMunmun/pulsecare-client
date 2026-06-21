@@ -52,6 +52,16 @@ export default function SignInPage() {
             <Button type="submit" className={"w-full bg-red-800"}>
               Login
             </Button>
+
+            <p className="text-center mt-4">
+  Don't have an account?{" "}
+  <a
+    href="/signup"
+    className="text-red-600 font-semibold hover:underline"
+  >
+    Sign Up
+  </a>
+</p>
           </Fieldset>
         </Form>
       </Surface>

@@ -80,6 +80,23 @@ export default function SignUpPage() {
             <Button type="submit" className={"w-full bg-red-800"}>
               Sign Up
             </Button>
+
+            {/* new code added */}
+
+<p className="text-center mt-4">
+  Don't have an account?{" "}
+  <a
+    href="/registration"
+    className="text-red-600 font-semibold hover:underline"
+  >
+    Register
+  </a>
+</p>
+
+            {/* new code added */}
+
+
+            
           </Fieldset>
         </Form>
       </Surface>

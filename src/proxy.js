@@ -9,11 +9,7 @@ const session = await auth.api.getSession({
     
 })
 console.log(session);
- if(session?.user?.role?.toLowerCase() === "donor" &&
-  session?.user?.plan === "free" )
-  {
-    return NextResponse.redirect(new URL('/registration', request.url))
-   }
+ 
 
    if(!session){
     return NextResponse.redirect(new URL('/signin', request.url))

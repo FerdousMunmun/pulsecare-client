@@ -12,17 +12,26 @@ Label,
 Surface,
 TextField,
 } from "@heroui/react";
-
+import { useRouter } from "next/navigation";
 export default function RegistrationPage() {
 const [districts, setDistricts] = useState([]);
 const [upazilas, setUpazilas] = useState([]);
 const [loading, setLoading] = useState(false);
-
+const router = useRouter();
 // Load Districts From Backend
 useEffect(() => {
   fetch("http://localhost:5000/districts")
-    .then((res) => res.json())
-    .then((data) => setDistricts(data));
+    .then((res) => {
+      console.log("Response:", res);
+      return res.json();
+    })
+    .then((data) => {
+      console.log("District Data:", data);
+      setDistricts(data);
+    })
+    .catch((err) => {
+      console.error("Fetch Error:", err);
+    });
 }, []);
 
 // Load Upazila By District
@@ -52,6 +61,7 @@ try {
   if (password !== confirmPassword) {
     alert("Passwords do not match");
     return;
+    
   }
 
   // Image Upload
@@ -86,18 +96,26 @@ try {
     district: formData.get("district"),
     upazila: formData.get("upazila"),
 
-    role: "donor",
+   role: formData.get("role"),
     status: "active",
     plan: "free",
   });
 
   if (result?.error) {
-    alert(result.error.message);
-    return;
-  }
+  alert(result.error.message);
+  return;
+}
 
-  alert("Registration Successful");
-  window.location.href = "/";
+const role = formData.get("role");
+
+console.log("Role:", role);
+
+if (role === "donor") {
+  window.location.href = "/dashboard/donor";
+} else if (role === "volunteer") {
+  window.location.href = "/dashboard/volunteer";
+
+}
 } catch (error) {
   console.log(error);
   alert("Something went wrong");
@@ -108,7 +126,9 @@ try {
 
 };
 
-return ( <div className="max-w-3xl mx-auto mt-10 border rounded-3xl p-8 shadow-lg"> <Surface> <Form onSubmit={onSubmit}> <Fieldset className="w-full">
+return ( <div className="max-w-3xl mx-auto mt-10 border rounded-3xl p-8 shadow-lg"> 
+<Surface> 
+  <form onSubmit={onSubmit}> <Fieldset className="w-full">
 
 
         <Fieldset.Legend className="text-center text-3xl font-bold">
@@ -130,6 +150,20 @@ return ( <div className="max-w-3xl mx-auto mt-10 border rounded-3xl p-8 shadow-l
             <Label>Email</Label>
             <Input />
           </TextField>
+
+          <div>
+  <Label>Role</Label>
+
+  <select
+    name="role"
+    required
+    className="w-full border p-3 rounded-lg"
+  >
+    <option value="">Select Role</option>
+    <option value="donor">Donor</option>
+    <option value="volunteer">Volunteer</option>
+  </select>
+</div>
 
           <div>
             <Label>Avatar</Label>
@@ -166,30 +200,32 @@ return ( <div className="max-w-3xl mx-auto mt-10 border rounded-3xl p-8 shadow-l
               <option value="O-">O-</option>
             </select>
           </div>
+          
+<p>District Count: {districts.length}</p>
+ <div>
+  <Label>District</Label>
 
-          <div>
-            <Label>District</Label>
+  <select
+    name="district"
+    required
+    onChange={handleDistrictChange}
+    className="w-full border rounded-lg p-3"
+    defaultValue=""
+  >
+    <option value="" disabled>
+      Select District
+    </option>
 
-            <select
-              name="district"
-              required
-              onChange={handleDistrictChange}
-              className="w-full border p-3 rounded-lg"
-            >
-              <option value="">
-                Select District
-              </option>
-
-              {districts.map((district) => (
-                <option
-                  key={district.id}
-                  value={district.id}
-                >
-                  {district.name}
-                </option>
-              ))}
-            </select>
-          </div>
+    {districts.map((district) => (
+      <option
+        key={district._id}
+        value={district.id}
+      >
+        {district.name}
+      </option>
+    ))}
+  </select>
+</div>
 
           <div>
             <Label>Upazila</Label>
@@ -235,7 +271,7 @@ return ( <div className="max-w-3xl mx-auto mt-10 border rounded-3xl p-8 shadow-l
         </Button>
 
       </Fieldset>
-    </Form>
+    </form>
   </Surface>
 </div>
 
