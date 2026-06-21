@@ -20,157 +20,67 @@ export default function Footer() {
     }
   
   return (
-    <footer className="mt-16 border-t bg-background">
-      <div className="container mx-auto px-4">
-        <div className="grid gap-10 py-12 md:grid-cols-2 lg:grid-cols-4">
-          {/* Brand */}
-          <div>
-            <Link href="/" className="inline-block">
-              <Image
-                src="/logo-xl.png"
-                alt="Logo"
-                width={180}
-                height={50}
-                className="h-12 w-auto"
-              />
-            </Link>
+    <footer className="bg-red-800 text-white py-12">
+  <div className="max-w-7xl mx-auto px-6">
 
-            <p className="mt-4 text-sm text-muted-foreground">
-              Discover quality products at great prices. Fast delivery,
-              secure payments, and exceptional customer service.
-            </p>
+    <div className="grid md:grid-cols-4 gap-8">
 
-            <div className="mt-5 flex items-center gap-3">
-              <Link
-                href="#"
-                className="rounded-full border p-2 transition hover:bg-muted"
-              >
-                <FaFacebook className="h-4 w-4" />
-              </Link>
-              <Link
-                href="#"
-                className="rounded-full border p-2 transition hover:bg-muted"
-              >
-                <BsInstagram className="h-4 w-4" />
-              </Link>
-              <Link
-                href="#"
-                className="rounded-full border p-2 transition hover:bg-muted"
-              >
-                <BsTwitter className="h-4 w-4" />
-              </Link>
-              <Link
-                href="#"
-                className="rounded-full border p-2 transition hover:bg-muted"
-              >
-                <LiaLinkedin className="h-4 w-4" />
-              </Link>
-            </div>
-          </div>
+      <div>
+        <h3 className="text-2xl font-bold mb-4">
+          PulseCare
+        </h3>
 
-          {/* Shop */}
-          <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider">
-              Shop
-            </h3>
-
-            <ul className="space-y-3 text-sm text-muted-foreground">
-              <li>
-                <Link href="/products" className="hover:text-foreground">
-                  All Products
-                </Link>
-              </li>
-              <li>
-                <Link href="/categories" className="hover:text-foreground">
-                  Categories
-                </Link>
-              </li>
-              <li>
-                <Link href="/new-arrivals" className="hover:text-foreground">
-                  New Arrivals
-                </Link>
-              </li>
-              <li>
-                <Link href="/best-selling" className="hover:text-foreground">
-                  Best Selling
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Support */}
-          <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider">
-              Support
-            </h3>
-
-            <ul className="space-y-3 text-sm text-muted-foreground">
-              <li>
-                <Link href="/contact" className="hover:text-foreground">
-                  Contact Us
-                </Link>
-              </li>
-              <li>
-                <Link href="/faq" className="hover:text-foreground">
-                  FAQ
-                </Link>
-              </li>
-              <li>
-                <Link href="/privacy-policy" className="hover:text-foreground">
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link href="/terms" className="hover:text-foreground">
-                  Terms & Conditions
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Contact */}
-          <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider">
-              Contact
-            </h3>
-
-            <div className="space-y-4 text-sm text-muted-foreground">
-              <div className="flex gap-3">
-                <MapPin className="mt-0.5 h-4 w-4 shrink-0" />
-                <span>Dhaka, Bangladesh</span>
-              </div>
-
-              <div className="flex gap-3">
-                <Phone className="h-4 w-4 shrink-0" />
-                <span>+880 1234-567890</span>
-              </div>
-
-              <div className="flex gap-3">
-                <Mail className="h-4 w-4 shrink-0" />
-                <span>support@example.com</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex flex-col items-center justify-between gap-3 border-t py-6 text-center text-sm text-muted-foreground md:flex-row">
-          <p>
-            © {new Date().getFullYear()} Your Store. All rights reserved.
-          </p>
-
-          <div className="flex items-center gap-4">
-            <Link href="/privacy-policy" className="hover:text-foreground">
-              Privacy
-            </Link>
-            <Link href="/terms" className="hover:text-foreground">
-              Terms
-            </Link>
-            <Link href="/cookies" className="hover:text-foreground">
-              Cookies
-            </Link>
-          </div>
-        </div>
+        <p className="text-gray-400">
+          Connecting blood donors with recipients
+          to save lives across Bangladesh.
+        </p>
       </div>
-    </footer>
+
+      <div>
+        <h4 className="font-semibold mb-4">
+          Quick Links
+        </h4>
+
+        <ul className="space-y-2">
+          <li><a href="/">Home</a></li>
+          <li><a href="/registration">Become a Donor</a></li>
+          <li><a href="/signin">Login</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 className="font-semibold mb-4">
+          Services
+        </h4>
+
+        <ul className="space-y-2">
+          <li>Find Donors</li>
+          <li>Blood Requests</li>
+          <li>Emergency Support</li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 className="font-semibold mb-4">
+          Contact
+        </h4>
+
+        <ul className="space-y-2">
+          <li>Dhaka, Bangladesh</li>
+          <li>support@pulsecare.com</li>
+          <li>+880 1712-345678</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <hr className="my-8 border-gray-700" />
+
+    <p className="text-center text-gray-400">
+      © 2026 PulseCare. All Rights Reserved.
+    </p>
+
+  </div>
+</footer>
   );
 }

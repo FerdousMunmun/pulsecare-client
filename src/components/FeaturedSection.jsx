@@ -1,4 +1,9 @@
-<section className="py-20 bg-white">
+import React from 'react'
+
+const FeaturedSection = () => {
+  return (
+    <div>
+        <section className="py-20 bg-white">
   <div className="max-w-7xl mx-auto px-6">
     <h2 className="text-4xl font-bold text-center mb-12">
       Why Choose PulseCare?
@@ -39,3 +44,8 @@
     </div>
   </div>
 </section>
+    </div>
+  )
+}
+
+export default FeaturedSection
