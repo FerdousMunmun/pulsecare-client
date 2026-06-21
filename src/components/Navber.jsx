@@ -79,20 +79,22 @@ const Navbar = () => {
             </Link>
           </div>
           <ul className="hidden items-center gap-4 md:flex">
+
+             <li className="hover:text-red-800 font-medium text-medium">
+              <Link href="/funding">Home</Link>
+            </li>
             <li>
               <Link
-                href="/donation-request"
+                href="/donation-requests"
                  className="hover:text-red-800 font-medium text-medium"
                 aria-current="page"
               >
                 Donation Requests
               </Link>
             </li>
+           
             <li className="hover:text-red-800 font-medium text-medium">
-              <Link href="/funding">Funding</Link>
-            </li>
-            <li className="hover:text-red-800 font-medium text-medium">
-              <Link href="/registration">Registration</Link>
+              <Link href="/search-donor">Search Donor</Link>
             </li>
           </ul>
          {!user && (
