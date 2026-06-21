@@ -6,15 +6,14 @@ import Link from "next/link";
 export default function DonationRequestsPage() {
 
   const [requests, setRequests] = useState([]);
-
-  useEffect(() => {
-
-    fetch("http://localhost:5000/donation-requests")
-      .then(res => res.json())
-      .then(data => setRequests(data));
-       console.log(data);
-
-  }, []);
+useEffect(() => {
+  fetch("http://localhost:5000/donation-requests")
+    .then((res) => res.json())
+    .then((data) => {
+      setRequests(data);
+      console.log(data);
+    });
+}, []);
 
   return (
 
