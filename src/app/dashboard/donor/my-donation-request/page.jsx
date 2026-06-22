@@ -2,32 +2,93 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { authClient } from "@/lib/auth-client";
 
+
+import {
+  getDonationRequests,
+} from "@/services/donationRequest";
+
+import {
+  getDonationRequests,
+  deleteDonationRequest,
+} from "@/services/donationRequest";
 export default function MyDonationRequestPage() {
-
+const [session, setSession] = useState(null);
   const [requests, setRequests] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [filterStatus, setFilterStatus] =
+  useState("all");
+useEffect(() => {
+  authClient.getSession().then((res) => {
+    setSession(res.data);
+   
+  });
+}, []);
 
-  useEffect(() => {
-    fetch("http://localhost:5000/donation-requests")
-      .then((res) => res.json())
-      .then((data) => setRequests(data));
-  }, []);
+
+
+useEffect(() => {
+  getDonationRequests().then((data) => {
+    setRequests(data);
+  });
+}, []);
+
+
+  const handleDelete = async (id) => {
+  const confirmDelete = window.confirm(
+    "Are you sure?"
+  );
+
+  if (!confirmDelete) return;
+
+  const result =
+    await deleteDonationRequest(id);
+
+  if (result.deletedCount > 0) {
+    setRequests(
+      requests.filter(
+        (request) => request._id !== id
+      )
+    );
+
+    alert("Deleted Successfully");
+  }
+};
 
   const itemsPerPage = 10;
+
+  const myRequests = requests.filter( 
+  (request) =>
+    request.requesterEmail ===
+    session?.user?.email
+    
+);
+
+ console.log(session?.user?.email);
+console.log(myRequests);
+const filteredRequests =
+  filterStatus === "all"
+    ? myRequests
+    : myRequests.filter(
+        (request) =>
+          request.status === filterStatus
+      );
 
   const lastIndex = currentPage * itemsPerPage;
   const firstIndex = lastIndex - itemsPerPage;
 
-  const currentRequests = requests.slice(
+  const currentRequests =
+  filteredRequests.slice(
     firstIndex,
     lastIndex
   );
+  console.log("Current Requests:", currentRequests);
 
   const totalPages = Math.ceil(
-    requests.length / itemsPerPage
-  );
-
+  filteredRequests.length /
+    itemsPerPage
+);
   return (
     <div className="max-w-7xl mx-auto p-8">
 
@@ -40,6 +101,33 @@ export default function MyDonationRequestPage() {
           Manage and track your blood donation posts.
         </p>
       </div>
+
+
+      <div className="mb-4">
+
+  <select
+    value={filterStatus}
+    onChange={(e) =>
+      setFilterStatus(e.target.value)
+    }
+    className="border p-3 rounded-xl"
+  >
+    <option value="all">All</option>
+    <option value="pending">
+      Pending
+    </option>
+    <option value="inprogress">
+      In Progress
+    </option>
+    <option value="done">
+      Done
+    </option>
+    <option value="canceled">
+      Canceled
+    </option>
+  </select>
+
+</div>
 
       <div className="bg-white rounded-3xl shadow-lg overflow-hidden">
 
@@ -95,14 +183,37 @@ export default function MyDonationRequestPage() {
                 </td>
 
                 <td className="p-4">
-                  <Link
-                    href={`/donation-requests/${request._id}`}
-                  >
-                    <button className="bg-red-600 text-white px-3 py-2 rounded-lg">
-                      View
-                    </button>
-                  </Link>
-                </td>
+
+  <div className="flex gap-2">
+
+    <Link
+      href={`/donation-requests/${request._id}`}
+    >
+      <button className="bg-blue-400 text-white px-3 py-2 rounded-lg">
+        View
+      </button>
+    </Link>
+
+    <Link
+  href={`/dashboard/donor/edit-donation-request/${request._id}`}
+>
+  <button className="bg-green-600 text-white px-3 py-2 rounded-lg">
+    Edit
+  </button>
+</Link>
+
+    <button
+  onClick={() =>
+    handleDelete(request._id)
+  }
+  className="bg-red-600 text-white px-3 py-2 rounded-lg"
+>
+  Delete
+</button>
+
+  </div>
+
+</td>
 
               </tr>
 

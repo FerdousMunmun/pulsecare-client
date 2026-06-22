@@ -25,3 +25,15 @@ export const createDonationRequest =
 
     return res.json();
   };
+
+
+  export const deleteDonationRequest = async (id) => {
+  const res = await fetch(
+    `${API_URL}/donation-requests/${id}`,
+    {
+      method: "DELETE",
+    }
+  );
+
+  return res.json();
+};
