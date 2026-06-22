@@ -1,14 +1,24 @@
-import { headers } from "next/headers";
-import { auth } from "@/lib/auth";
+
 import {
   getDonationRequestById,
 } from "@/services/donationRequest";
-export default async function DonationdetailsPage() {
+
+
+
+
+export default async function DonationdetailsPage({
+  params,
+}) {
 
   const request =
-  await getDonationRequestById(
-    params.id
+    await getDonationRequestById(
+      params.id
+    );
+
+  return (
+    ...
   );
+}
 
   return (
     <div className="max-w-4xl mx-auto p-8">
