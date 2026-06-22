@@ -4,6 +4,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { authClient } from "@/lib/auth-client";
+import { getDonationRequests } from "@/services/donationRequest";
 
 export default function DonarDashboardHomePage() {
   const [session, setSession] = useState(null);
@@ -15,11 +16,9 @@ useEffect(() => {
 }, []);
 
 useEffect(() => {
-fetch("http://localhost:5000/donation-requests")
-.then((res) => res.json())
-.then((data) => {
-setRequests(data);
-});
+  getDonationRequests().then((data) => {
+    setRequests(data);
+  });
 }, []);
 const myRequests = requests.filter(
   (request) =>
@@ -44,8 +43,8 @@ return ( <div className="max-w-7xl mx-auto p-8">
 
       <div>
         <h1 className="text-4xl font-extrabold text-red-700">
-          Welcome 👋
-        </h1>
+  Welcome, {session?.user?.name} 👋
+</h1>
 
         <p className="text-gray-500 mt-2">
           Thank you for being a valuable donor.
@@ -56,7 +55,11 @@ return ( <div className="max-w-7xl mx-auto p-8">
         Active
       </div>
 
-      <div className="grid md:grid-cols-3 gap-5 mt-8">
+      
+
+    </div>
+
+    <div className="grid md:grid-cols-3 gap-5 mt-8">
 
   <div className="bg-red-50 p-5 rounded-xl">
     <p>User Name</p>
@@ -72,15 +75,15 @@ return ( <div className="max-w-7xl mx-auto p-8">
     <p>Total Requests</p>
     <h3>{myRequests.length}</h3>
   </div>
-
 </div>
-
-    </div>
+</div>
 
 {/* tabular */}
 
-<div className="bg-white rounded-3xl shadow-lg overflow-hidden">
-
+<div className="bg-white rounded-3xl shadow-lg overflow-hidden mt-8">
+{myRequests.length > 0 && (
+  <>
+  
   <table className="w-full">
 
     <thead className="bg-gray-100">
@@ -158,6 +161,9 @@ return ( <div className="max-w-7xl mx-auto p-8">
     </tbody>
 
   </table>
+
+    </>
+)}
   <div className="mt-8 flex justify-center">
 
   <Link
@@ -170,10 +176,11 @@ return ( <div className="max-w-7xl mx-auto p-8">
 </div>
 
 </div>
+
 {/* tabular */}
     </div>
     
-</div>
+
 
 
 );

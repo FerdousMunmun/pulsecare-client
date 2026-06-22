@@ -2,6 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { authClient } from "@/lib/auth-client";
+import {
+  createDonationRequest,
+} from "@/services/donationRequest";
 
 export default function CreateDonationRequestPage() {
 const [session, setSession] = useState(null);
@@ -100,18 +103,9 @@ const donationRequest = {
 };
 
 try {
-  const res = await fetch(
-    "http://localhost:5000/donation-requests",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(donationRequest),
-    }
+  const data = await createDonationRequest(
+    donationRequest
   );
-
-  const data = await res.json();
 
   if (data.insertedId || data.acknowledged) {
     alert("Donation Request Created Successfully!");
