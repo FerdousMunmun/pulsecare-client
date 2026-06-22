@@ -81,7 +81,7 @@ const Navbar = () => {
           <ul className="hidden items-center gap-4 md:flex">
 
              <li className="hover:text-red-800 font-medium text-medium">
-              <Link href="/funding">Home</Link>
+              <Link href="/">Home</Link>
             </li>
             <li>
               <Link
@@ -94,15 +94,15 @@ const Navbar = () => {
             </li>
            
             <li className="hover:text-red-800 font-medium text-medium">
-              <Link href="/search-donor">Search Donor</Link>
+              <Link href="/funding">Funding</Link>
             </li>
           </ul>
          {!user && (
             <div className="hidden items-center gap-4 md:flex  font-medium hover:text-red-800">
               <Link href="/signin">Login</Link>
-              {/* <Link href="/signup">
-                <Button variant="outline" className={`font-medium hover:text-red-800`}>Sign Up</Button>
-              </Link> */}
+              <Link href="/registration">
+                <Button variant="outline" className={`font-medium hover:text-red-800`}>Registration</Button>
+              </Link>
             </div>
           )}
 
@@ -192,7 +192,7 @@ const Navbar = () => {
                 <Link href="#" className="block py-2">
                   Login
                 </Link>
-                <Button className="w-full">Sign Up</Button>
+                <Button className="w-full">Registration</Button>
               </li>
             </ul>
           </div>

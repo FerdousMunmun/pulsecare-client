@@ -68,3 +68,25 @@ export const updateDonationRequest = async (
 
   return res.json();
 };
+
+
+export const donateRequest =
+async (id, donorInfo) => {
+
+const res = await fetch(
+`${API_URL}/donation-requests/${id}/donate`,
+{
+method:"PATCH",
+
+headers:{
+"Content-Type":
+"application/json",
+},
+
+body:JSON.stringify(donorInfo),
+}
+);
+
+return res.json();
+
+};

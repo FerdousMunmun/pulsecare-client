@@ -108,7 +108,7 @@ useEffect(() => {
     </div>
 
     <Link
-  href="/signup"
+  href="/registration"
 >
   <button className="mt-8 w-full bg-red-800 hover:bg-red-500 text-white font-semibold py-3 rounded-2xl transition">
       View Details →
