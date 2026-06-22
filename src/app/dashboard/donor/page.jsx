@@ -3,9 +3,16 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { authClient } from "@/lib/auth-client";
 
-export default function Dashboard() {
+export default function DonarDashboardHomePage() {
+  const [session, setSession] = useState(null);
 const [requests, setRequests] = useState([]);
+useEffect(() => {
+  authClient.getSession().then((res) => {
+    setSession(res.data);
+  });
+}, []);
 
 useEffect(() => {
 fetch("http://localhost:5000/donation-requests")
@@ -14,6 +21,18 @@ fetch("http://localhost:5000/donation-requests")
 setRequests(data);
 });
 }, []);
+const myRequests = requests.filter(
+  (request) =>
+    request.requesterEmail === session?.user?.email
+);
+
+const recentRequests = myRequests
+  .sort(
+    (a, b) =>
+      new Date(b.createdAt) -
+      new Date(a.createdAt)
+  )
+  .slice(0, 3);
 
 return ( <div className="max-w-7xl mx-auto p-8">
 
@@ -37,140 +56,123 @@ return ( <div className="max-w-7xl mx-auto p-8">
         Active
       </div>
 
-    </div>
+      <div className="grid md:grid-cols-3 gap-5 mt-8">
 
-    <div className="grid md:grid-cols-3 gap-5 mt-8">
-
-      <div className="bg-gradient-to-r from-red-50 to-red-100 p-6 rounded-2xl border border-red-100">
-
-        <p className="text-gray-500 text-sm">
-          User Name
-        </p>
-
-        <h3 className="text-2xl font-bold mt-2">
-      
-        </h3>
-
-      </div>
-
-      <div className="bg-gradient-to-r from-orange-50 to-orange-100 p-6 rounded-2xl border border-orange-100">
-
-        <p className="text-gray-500 text-sm">
-          Role
-        </p>
-
-        <h3 className="text-2xl font-bold mt-2">
-          Donor
-        </h3>
-
-      </div>
-
-      <div className="bg-gradient-to-r from-green-50 to-green-100 p-6 rounded-2xl border border-green-100">
-
-        <p className="text-gray-500 text-sm">
-          Total Requests
-        </p>
-
-        <h3 className="text-2xl font-bold mt-2">
-          {requests.length}
-        </h3>
-
-      </div>
-
-    </div>
-
+  <div className="bg-red-50 p-5 rounded-xl">
+    <p>User Name</p>
+    <h3>{session?.user?.name}</h3>
   </div>
 
-  {/* Recent Requests */}
-  <h2 className="text-3xl font-bold mb-6">
-    Recent Donation Requests
-  </h2>
+  <div className="bg-orange-50 p-5 rounded-xl">
+    <p>Role</p>
+    <h3>Donor</h3>
+  </div>
 
-  <div className="grid md:grid-cols-3 gap-6">
+  <div className="bg-green-50 p-5 rounded-xl">
+    <p>Total Requests</p>
+    <h3>{myRequests.length}</h3>
+  </div>
 
-    {requests.slice(0, 3).map((request) => (
+</div>
 
-      <div
-        key={request._id}
-        className="bg-white rounded-[30px] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300"
-      >
+    </div>
 
-        {/* Top Banner */}
-        <div className="bg-red-100 h-24 relative">
+{/* tabular */}
 
-          <p className="absolute top-4 left-4 text-[10px] font-bold text-orange-500 uppercase tracking-widest">
-            ● {request.status}
-          </p>
+<div className="bg-white rounded-3xl shadow-lg overflow-hidden">
 
-          <div className="absolute -bottom-6 left-5 bg-white shadow-lg rounded-2xl w-16 h-16 flex items-center justify-center">
-            <span className="text-3xl font-extrabold text-red-600">
-              {request.bloodGroup}
-            </span>
-          </div>
+  <table className="w-full">
 
-        </div>
+    <thead className="bg-gray-100">
 
-        {/* Content */}
-        <div className="px-6 pt-10 pb-6">
+      <tr>
 
-          <h3 className="text-xl font-bold text-center text-gray-900">
+        <th className="p-4 text-left">Recipient</th>
+
+        <th className="p-4 text-left">Location</th>
+
+        <th className="p-4 text-left">Date</th>
+
+        <th className="p-4 text-left">Time</th>
+
+        <th className="p-4 text-left">Group</th>
+
+        <th className="p-4 text-left">Status</th>
+
+        <th className="p-4 text-left">Action</th>
+
+      </tr>
+
+    </thead>
+
+    <tbody>
+
+      {recentRequests.map((request) => (
+
+        <tr
+          key={request._id}
+          className="border-t"
+        >
+
+          <td className="p-4">
             {request.recipientName}
-          </h3>
+          </td>
 
-          <p className="text-[10px] text-center uppercase tracking-[3px] text-gray-400 mb-6">
-            Recipient
-          </p>
+          <td className="p-4">
+            {request.recipientUpazila},{" "}
+            {request.recipientDistrict}
+          </td>
 
-          <div className="space-y-4">
+          <td className="p-4">
+            {request.donationDate}
+          </td>
 
-            <div>
-              <p className="text-[10px] uppercase tracking-widest text-gray-400 font-semibold">
-                Location
-              </p>
+          <td className="p-4">
+            {request.donationTime}
+          </td>
 
-              <p className="text-sm font-semibold text-gray-700">
-                {request.recipientUpazila},{" "}
-                {request.recipientDistrict}
-              </p>
-            </div>
+          <td className="p-4 font-bold text-red-600">
+            {request.bloodGroup}
+          </td>
 
-            <div>
-              <p className="text-[10px] uppercase tracking-widest text-gray-400 font-semibold">
-                Date & Time
-              </p>
+          <td className="p-4">
+            {request.status}
+          </td>
 
-              <p className="text-sm font-semibold text-gray-700">
-                {request.donationDate} | {request.donationTime}
-              </p>
-            </div>
+          <td className="p-4">
 
-          </div>
+            <Link
+              href={`/donation-requests/${request._id}`}
+            >
+              <button className="bg-blue-600 text-white px-3 py-2 rounded-lg">
+                View
+              </button>
+            </Link>
 
-          <Link href={`/donation-requests/${request._id}`}>
-            <button className="mt-8 w-full bg-red-700 hover:bg-red-800 text-white font-semibold py-3 rounded-2xl transition">
-              View Details →
-            </button>
-          </Link>
+          </td>
 
-        </div>
+        </tr>
 
-      </div>
+      ))}
 
-    ))}
+    </tbody>
 
-  </div>
-
+  </table>
   <div className="mt-8 flex justify-center">
 
-    <Link
-  href="/dashboard/donor/my-donation-request"
-  className="bg-red-700 hover:bg-red-800 text-white px-6 py-3 rounded-xl font-semibold"
->
-  View All Requests
-</Link>
+  <Link
+    href="/dashboard/donor/my-donation-request"
+    className="bg-red-700 hover:bg-red-800 text-white px-6 py-3 rounded-xl font-semibold"
+  >
+    View All Requests
+  </Link>
 
-  </div>
+</div>
 
+</div>
+{/* tabular */}
+    </div>
+    
 </div>
 
 
