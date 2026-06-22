@@ -27,11 +27,42 @@ export const createDonationRequest =
   };
 
 
-  export const deleteDonationRequest = async (id) => {
+export const deleteDonationRequest = async (id) => {
   const res = await fetch(
     `${API_URL}/donation-requests/${id}`,
     {
       method: "DELETE",
+    }
+  );
+
+  return res.json();
+};
+
+
+export const getDonationRequestById = async (
+  id
+) => {
+  const res = await fetch(
+    `${API_URL}/donation-requests/${id}`
+  );
+
+  return res.json();
+};
+
+
+export const updateDonationRequest = async (
+  id,
+  data
+) => {
+  const res = await fetch(
+    `${API_URL}/donation-requests/${id}`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type":
+          "application/json",
+      },
+      body: JSON.stringify(data),
     }
   );
 
