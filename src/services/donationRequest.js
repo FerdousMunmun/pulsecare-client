@@ -90,3 +90,16 @@ body:JSON.stringify(donorInfo),
 return res.json();
 
 };
+
+export const getMyDonationRequests =
+async(email)=>{
+
+const res =
+await fetch(
+`${API_URL}/my-donation-requests/${email}`
+);
+
+
+return res.json();
+
+};

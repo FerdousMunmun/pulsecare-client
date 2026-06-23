@@ -4,6 +4,8 @@ import {
 
 import Link from "next/link";
 
+import DonateButton from "@/components/DonateButton";
+
 
 export default async function DonationDetailsPage({
   params,
@@ -173,11 +175,9 @@ export default async function DonationDetailsPage({
         </div>
 
 
-        <button className="bg-red-700 hover:bg-red-800 text-white px-10 py-4 rounded-2xl font-bold">
-
-          Donate Now
-
-        </button>
+        <DonateButton
+          requestId={request._id}
+        />
 
 
       </div>
