@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Card } from "@heroui/react";
-
+import { getDonationRequests } from "@/services/donationRequest";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { FaCalendarAlt } from "react-icons/fa";
 
@@ -27,19 +27,20 @@ const totalPages = Math.ceil(requests.length / itemsPerPage);
 
 
 useEffect(() => {
-  fetch("http://localhost:5000/donation-requests")
-    .then((res) => res.json())
-    .then((data) => {
-      setRequests(data);
-      console.log(data);
-    });
+  getDonationRequests().then((data) => {
+    const pendingRequests = data.filter(
+      (request) => request.status === "pending"
+    );
+
+    setRequests(pendingRequests);
+  });
 }, []);
 
   return (
 
     <div className="max-w-7xl mx-auto py-10">
 
-      <h1 className="text-4xl font-bold text-center mb-10 text-red-800">
+      <h1 className="text-4xl font-bold text-center mb-10 text-red-600">
         Donation Requests
       </h1>
 
@@ -53,7 +54,7 @@ useEffect(() => {
   <div className="bg-red-100 h-28 relative">
     
     <p className="absolute top-4 left-4 text-[10px] font-bold text-orange-500 uppercase tracking-widest">
-      ● Gone
+   ● {request.status}
     </p>
 
     <div className="absolute -bottom-6 left-5 bg-white shadow-lg rounded-2xl w-16 h-16 flex items-center justify-center">
@@ -108,9 +109,9 @@ useEffect(() => {
     </div>
 
     <Link
-  href="/registration"
+ href={`/donation-requests/${request._id}`}
 >
-  <button className="mt-8 w-full bg-red-800 hover:bg-red-500 text-white font-semibold py-3 rounded-2xl transition">
+  <button className="mt-8 w-full bg-red-600 hover:bg-red-500 text-white font-semibold py-3 rounded-2xl transition">
       View Details →
     </button>
 

@@ -16,63 +16,63 @@ import {
 
 
 export default function MyDonationRequestPage() {
-const [session, setSession] = useState(null);
+  const [session, setSession] = useState(null);
   const [requests, setRequests] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [filterStatus, setFilterStatus] =
-  useState("all");
-useEffect(() => {
-  authClient.getSession().then((res) => {
-    setSession(res.data);
-   
-  });
-}, []);
+    useState("all");
+  useEffect(() => {
+    authClient.getSession().then((res) => {
+      setSession(res.data);
+
+    });
+  }, []);
 
 
 
-useEffect(() => {
-  getDonationRequests().then((data) => {
-    setRequests(data);
-  });
-}, []);
+  useEffect(() => {
+    getDonationRequests().then((data) => {
+      setRequests(data);
+    });
+  }, []);
 
 
   const handleDelete = async (id) => {
-  const confirmDelete = window.confirm(
-    "Are you sure?"
-  );
-
-  if (!confirmDelete) return;
-
-  const result =
-    await deleteDonationRequest(id);
-
-  if (result.deletedCount > 0) {
-    setRequests(
-      requests.filter(
-        (request) => request._id !== id
-      )
+    const confirmDelete = window.confirm(
+      "Are you sure?"
     );
 
-    alert("Deleted Successfully");
-  }
-};
+    if (!confirmDelete) return;
+
+    const result =
+      await deleteDonationRequest(id);
+
+    if (result.deletedCount > 0) {
+      setRequests(
+        requests.filter(
+          (request) => request._id !== id
+        )
+      );
+
+      alert("Deleted Successfully");
+    }
+  };
 
   const itemsPerPage = 10;
 
-  const myRequests = requests.filter( 
-  (request) =>
-    request.requesterEmail ===
-    session?.user?.email
-    
-);
+  const myRequests = requests.filter(
+    (request) =>
+      request.requesterEmail ===
+      session?.user?.email
 
- console.log(session?.user?.email);
-console.log(myRequests);
-const filteredRequests =
-  filterStatus === "all"
-    ? myRequests
-    : myRequests.filter(
+  );
+
+  console.log(session?.user?.email);
+  console.log(myRequests);
+  const filteredRequests =
+    filterStatus === "all"
+      ? myRequests
+      : myRequests.filter(
         (request) =>
           request.status === filterStatus
       );
@@ -81,16 +81,16 @@ const filteredRequests =
   const firstIndex = lastIndex - itemsPerPage;
 
   const currentRequests =
-  filteredRequests.slice(
-    firstIndex,
-    lastIndex
-  );
+    filteredRequests.slice(
+      firstIndex,
+      lastIndex
+    );
   console.log("Current Requests:", currentRequests);
 
   const totalPages = Math.ceil(
-  filteredRequests.length /
+    filteredRequests.length /
     itemsPerPage
-);
+  );
   return (
     <div className="max-w-7xl mx-auto p-8">
 
@@ -107,29 +107,29 @@ const filteredRequests =
 
       <div className="mb-4">
 
-  <select
-    value={filterStatus}
-    onChange={(e) =>
-      setFilterStatus(e.target.value)
-    }
-    className="border p-3 rounded-xl"
-  >
-    <option value="all">All</option>
-    <option value="pending">
-      Pending
-    </option>
-    <option value="inprogress">
-      In Progress
-    </option>
-    <option value="done">
-      Done
-    </option>
-    <option value="canceled">
-      Canceled
-    </option>
-  </select>
+        <select
+          value={filterStatus}
+          onChange={(e) =>
+            setFilterStatus(e.target.value)
+          }
+          className="border p-3 rounded-xl"
+        >
+          <option value="all">All</option>
+          <option value="pending">
+            Pending
+          </option>
+          <option value="inprogress">
+            In Progress
+          </option>
+          <option value="done">
+            Done
+          </option>
+          <option value="canceled">
+            Canceled
+          </option>
+        </select>
 
-</div>
+      </div>
 
       <div className="bg-white rounded-3xl shadow-lg overflow-hidden">
 
@@ -179,43 +179,57 @@ const filteredRequests =
                 </td>
 
                 <td className="p-4">
-                  <span className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm">
+                  <span
+                    className={`px-3 py-1 rounded-full text-sm
+    ${request.status === "pending"
+                        ? "bg-yellow-100 text-yellow-700"
+                        : request.status === "inprogress"
+                          ? "bg-blue-100 text-blue-700"
+                          : request.status === "done"
+                            ? "bg-green-100 text-green-700"
+                            : "bg-red-100 text-red-700"
+                      }`}
+                  >
                     {request.status}
                   </span>
                 </td>
 
                 <td className="p-4">
 
-  <div className="flex gap-2">
+                  <div className="flex gap-2">
 
-    <Link
-      href={`/donation-requests/${request._id}`}
-    >
-      <button className="bg-blue-400 text-white px-3 py-2 rounded-lg">
-        View
-      </button>
-    </Link>
+                    <Link
+                      href={`/donation-requests/${request._id}`}
+                    >
+                      <button className="bg-blue-400 text-white px-3 py-2 rounded-lg">
+                        View
+                      </button>
+                    </Link>
 
-    <Link
-  href={`/dashboard/donor/edit-donation-request/${request._id}`}
->
-  <button className="bg-green-600 text-white px-3 py-2 rounded-lg">
-    Edit
-  </button>
-</Link>
+                    {request.status === "pending" && (
+                      <>
+                        <Link
+                          href={`/dashboard/donor/edit-donation-request/${request._id}`}
+                        >
+                          <button className="bg-green-600 text-white px-3 py-2 rounded-lg">
+                            Edit
+                          </button>
+                        </Link>
 
-    <button
-  onClick={() =>
-    handleDelete(request._id)
-  }
-  className="bg-red-600 text-white px-3 py-2 rounded-lg"
->
-  Delete
-</button>
+                        <button
+                          onClick={() =>
+                            handleDelete(request._id)
+                          }
+                          className="bg-red-600 text-white px-3 py-2 rounded-lg"
+                        >
+                          Delete
+                        </button>
+                      </>
+                    )}
 
-  </div>
+                  </div>
 
-</td>
+                </td>
 
               </tr>
 
@@ -229,8 +243,11 @@ const filteredRequests =
 
           <p className="text-gray-500">
             Showing {firstIndex + 1} to{" "}
-            {Math.min(lastIndex, requests.length)}
-            {" "}of {requests.length} results
+            {Math.min(
+              lastIndex,
+              filteredRequests.length
+            )}
+            of {filteredRequests.length}
           </p>
 
           <div className="flex gap-2">
@@ -252,11 +269,10 @@ const filteredRequests =
                 onClick={() =>
                   setCurrentPage(i + 1)
                 }
-                className={`px-4 py-2 rounded-lg ${
-                  currentPage === i + 1
+                className={`px-4 py-2 rounded-lg ${currentPage === i + 1
                     ? "bg-red-600 text-white"
                     : "border"
-                }`}
+                  }`}
               >
                 {i + 1}
               </button>

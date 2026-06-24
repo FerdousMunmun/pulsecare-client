@@ -12,7 +12,7 @@ console.log(session);
  
 
    if(!session){
-    return NextResponse.redirect(new URL('/signin', request.url))
+    return NextResponse.redirect(new URL('/registration', request.url))
    }
 }
  
@@ -23,3 +23,5 @@ export const config = {
     "/dashboard/:path*",
   ],
 };
+
+

@@ -7,6 +7,7 @@ import Link from "next/link";
 
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { getDonationRequestById } from "@/services/donationRequest";
 import {
   updateDonationRequest,
@@ -17,7 +18,7 @@ import {
 export default function EditDonationRequestPage() {
 
   const params = useParams();
-
+const router = useRouter();
 const [formData, setFormData] = useState({
   recipientName: "",
   recipientDistrict: "",
@@ -33,7 +34,7 @@ const [formData, setFormData] = useState({
    
     .then((data) => {
 
-      console.log("EDIT DATA:", data); // add this
+      
       setFormData({
         recipientName: data.recipientName || "",
         recipientDistrict: data.recipientDistrict || "",
@@ -61,10 +62,14 @@ const [formData, setFormData] = useState({
       );
 
   
-  console.log(result);
-    if (result.modifiedCount > 0) {
-      alert("Updated Successfully");
-    }
+  
+   if (result.modifiedCount > 0) {
+  alert("Updated Successfully");
+
+  router.push(
+    "/dashboard/donor/my-donation-requests"
+  );
+}
   };
 
 

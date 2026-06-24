@@ -19,7 +19,7 @@ const Navbar = () => {
 
   const pathname = usePathname()
   const role = user?.role?.toLowerCase() || "donor";
-  if(pathname.includes('dashboard')){
+  if (pathname.includes('dashboard')) {
     return null;
   }
 
@@ -71,33 +71,33 @@ const Navbar = () => {
             </button>
             <Link href={'/'}>
               <div className="flex items-center gap-3">
-               <LuHeartPulse className=" text-3xl text-red-800 pt-1"/>
+                <LuHeartPulse className=" text-3xl text-red-800 pt-1" />
                 <p className="text-2xl font-bold text-yellow-500">Pulse
-                    <span className="text-3xl font-bold text-red-800">Care</span>
+                  <span className="text-3xl font-bold text-red-800">Care</span>
                 </p>
               </div>
             </Link>
           </div>
           <ul className="hidden items-center gap-4 md:flex">
 
-             <li className="hover:text-red-800 font-medium text-medium">
+            <li className="hover:text-red-800 font-medium text-medium">
               <Link href="/">Home</Link>
             </li>
             <li>
               <Link
                 href="/donation-requests"
-                 className="hover:text-red-800 font-medium text-medium"
+                className="hover:text-red-800 font-medium text-medium"
                 aria-current="page"
               >
                 Donation Requests
               </Link>
             </li>
-           
+
             <li className="hover:text-red-800 font-medium text-medium">
               <Link href="/funding">Funding</Link>
             </li>
           </ul>
-         {!user && (
+          {!user && (
             <div className="hidden items-center gap-4 md:flex  font-medium hover:text-red-800">
               <Link href="/signin">Login</Link>
               <Link href="/registration">
@@ -118,7 +118,7 @@ const Navbar = () => {
                     />
                     <Avatar.Fallback>{user?.name?.charAt(0) || "U"}</Avatar.Fallback>
                   </Avatar>
-      
+
                 </Dropdown.Trigger>
                 <Dropdown.Popover>
                   <div className="px-3 pt-3 pb-1">
@@ -150,9 +150,17 @@ const Navbar = () => {
                       </Link>
                     </Dropdown.Item>
 
-                    <Dropdown.Item id="copy-link" textValue="Copy link">
-                      <CgProfile />
-                      <Label>Profile</Label>
+                    <Dropdown.Item
+                      id="profile"
+                      textValue="Profile"
+                    >
+                      <Link
+                        href="/dashboard/profile"
+                        className="flex items-center gap-2 w-full"
+                      >
+                        <CgProfile />
+                        <Label>Profile</Label>
+                      </Link>
                     </Dropdown.Item>
 
                     <Dropdown.Item
@@ -198,7 +206,7 @@ const Navbar = () => {
           </div>
         )}
       </nav>
-    </div>
+    </div >
   );
 };
 

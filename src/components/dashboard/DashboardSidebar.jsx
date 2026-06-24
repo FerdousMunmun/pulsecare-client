@@ -115,6 +115,7 @@ import { headers } from "next/headers";
 import Link from "next/link";
 import { LuHeartPulse } from "react-icons/lu";
 import { House } from "@gravity-ui/icons";
+import LogoutButton from "@/components/dashboard/LogoutButton";
 
 export default async function DashboardSidebar() {
 const session = await auth.api.getSession({
@@ -134,12 +135,12 @@ link: "/dashboard/donor",
 {
 icon: House,
 label: "My Profile",
-link: "/dashboard/donor/profile",
+link: "/dashboard/profile",
 },
 {
 icon: House,
 label: "My Donation Requests",
-link: "/dashboard/donor/my-donation-request",
+link: "/dashboard/donor/my-donation-requests",
 },
 {
 icon: House,
@@ -148,7 +149,7 @@ link: "/dashboard/donor/create-donation-request",
 },
 ],
 
-```
+
 volunteer: [
   {
     icon: House,
@@ -158,7 +159,7 @@ volunteer: [
   {
     icon: House,
     label: "My Profile",
-    link: "/dashboard/volunteer/profile",
+    link: "/dashboard/profile",
   },
   {
     icon: House,
@@ -176,7 +177,7 @@ admin: [
   {
     icon: House,
     label: "My Profile",
-    link: "/dashboard/admin/profile",
+    link: "/dashboard/profile",
   },
   {
     icon: House,
@@ -189,7 +190,7 @@ admin: [
     link: "/dashboard/admin/all-users",
   },
 ],
-```
+
 
 };
 
@@ -197,7 +198,7 @@ const navItems = dashboardItems[role] || dashboardItems.donor;
 
 return ( <aside className="w-[280px] min-h-screen bg-white border-r shadow-lg p-5">
 
-```
+
   {/* Role Badge */}
   <div className="mb-5">
     <span className="bg-red-100 text-red-700 px-4 py-1 rounded-full text-sm font-semibold capitalize">
@@ -206,19 +207,22 @@ return ( <aside className="w-[280px] min-h-screen bg-white border-r shadow-lg p-
   </div>
 
   {/* Logo */}
-  <div className="flex items-center gap-2 border-b pb-5 mb-6">
-    <LuHeartPulse className="text-4xl text-red-700" />
+  <Link
+  href="/"
+  className="flex items-center gap-2 border-b pb-5 mb-6"
+>
+  <LuHeartPulse className="text-4xl text-red-700" />
 
-    <h1 className="text-3xl font-bold">
-      <span className="text-yellow-500">
-        Pulse
-      </span>
+  <h1 className="text-3xl font-bold">
+    <span className="text-yellow-500">
+      Pulse
+    </span>
 
-      <span className="text-red-700">
-        Care
-      </span>
-    </h1>
-  </div>
+    <span className="text-red-700">
+      Care
+    </span>
+  </h1>
+</Link>
 
   {/* User Info */}
   <div className="bg-gray-50 rounded-xl p-4 mb-6">
@@ -256,13 +260,16 @@ return ( <aside className="w-[280px] min-h-screen bg-white border-r shadow-lg p-
   </nav>
 
   {/* Footer */}
-  <div className="mt-10 border-t pt-4">
+  
+<div className="mt-40 border-t pt-4 border-b pb-4">
     <p className="text-xs text-gray-400 text-center">
       PulseCare Blood Donation Platform
     </p>
   </div>
+
+  <LogoutButton />
 </aside>
-```
+
 
 );
 }
