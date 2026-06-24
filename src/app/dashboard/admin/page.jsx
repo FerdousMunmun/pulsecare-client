@@ -1,13 +1,20 @@
 import { getDonationRequests } from "@/services/donationRequest";
 import { getUsers } from "@/services/user";
+import { getDashboardStats }
+from "@/services/dashboard";
 
 export default async function AdminHomePage() {
   const requests = await getDonationRequests();
 const users = await getUsers();
+const stats =
+  await getDashboardStats();
 
-const totalUsers = users.length;
-const totalFunding = 0;
-  const totalRequests = requests.length;
+const totalUsers =
+  stats.totalDonors;
+const totalFunding =
+  stats.totalFunding;
+ const totalRequests =
+  stats.totalRequests;
 
   const pendingRequests = requests.filter(
     (request) => request.status === "pending"
