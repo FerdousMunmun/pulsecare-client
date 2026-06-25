@@ -4,17 +4,26 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 import { authClient } from "@/lib/auth-client";
-
+import { FaCamera } from "react-icons/fa";
 import {
   getUserProfile,
   updateUserProfile,
 } from "@/services/user";
+
+import {
+  getDistricts,
+  getUpazilas,
+} from "@/services/distric";
 
 export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
   const [userId, setUserId] = useState("");
 
   const [formData, setFormData] = useState({});
+  const [districts, setDistricts] = useState([]);
+  const [upazilas, setUpazilas] = useState([]);
+  const [imageFile, setImageFile] = useState(null);
+
 
   //   useEffect বসবে
 
@@ -49,6 +58,48 @@ export default function ProfilePage() {
       });
   }, []);
 
+  useEffect(() => {
+    getDistricts()
+      .then(setDistricts)
+      .catch(console.error);
+  }, []);
+
+  useEffect(() => {
+
+    if (
+      !districts.length ||
+      !formData.district
+    )
+      return;
+
+    const loadUpazilas = async () => {
+
+      const selectedDistrict =
+        districts.find(
+          (district) =>
+            district.name ===
+            formData.district
+        );
+
+      if (!selectedDistrict)
+        return;
+
+      const data =
+        await getUpazilas(
+          selectedDistrict.id
+        );
+
+      setUpazilas(data);
+
+    };
+
+    loadUpazilas();
+
+  }, [
+    districts,
+    formData.district,
+  ]);
+
 
   const handleChange = (e) => {
     setFormData({
@@ -58,13 +109,76 @@ export default function ProfilePage() {
   };
 
   const handleSave = async () => {
-    // backend call later
+
+    let imageUrl = formData.image;
+
+    if (imageFile) {
+
+      const imageForm = new FormData();
+
+      imageForm.append(
+        "image",
+        imageFile
+      );
+
+      const uploadRes = await fetch(
+        `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_KEY}`,
+        {
+          method: "POST",
+          body: imageForm,
+        }
+      );
+
+      const uploadData =
+        await uploadRes.json();
+
+      imageUrl =
+        uploadData.data.url;
+    }
+
+    await updateUserProfile(
+      userId,
+      {
+        ...formData,
+        image: imageUrl,
+      }
+    );
+
+    setFormData({
+      ...formData,
+      image: imageUrl,
+    });
 
     setIsEditing(false);
 
-    alert("Profile Updated Successfully");
+    alert(
+      "Profile Updated Successfully"
+    );
+
   };
 
+
+
+  const handleDistrictChange = async (e) => {
+
+    const districtId = e.target.value;
+
+    const selectedDistrict = districts.find(
+      (district) => district.id === districtId
+    );
+
+    if (!selectedDistrict) return;
+
+    const data = await getUpazilas(districtId);
+
+    setUpazilas(data);
+
+    setFormData((prev) => ({
+      ...prev,
+      district: selectedDistrict.name,
+      upazila: "",
+    }));
+  };
   return (
     <div className="max-w-5xl mx-auto p-8">
 
@@ -105,11 +219,59 @@ export default function ProfilePage() {
 
         <div className="flex justify-center mb-10">
 
-          <img
-            src={formData.image}
-            alt="profile"
-            className="w-32 h-32 rounded-full border-4 border-red-500"
-          />
+          <div className="relative">
+
+            <img
+              src={
+                imageFile
+                  ? URL.createObjectURL(imageFile)
+                  : formData.image
+              }
+              alt="profile"
+              className="w-32 h-32 rounded-full border-4 border-red-500 object-cover"
+            />
+
+            {isEditing && (
+              <>
+                <input
+                  id="avatar"
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+
+                    const file = e.target.files[0];
+
+                    if (!file) return;
+
+                    if (!file.type.startsWith("image/")) {
+                      alert("Please select an image.");
+                      return;
+                    }
+
+                    if (file.size > 5 * 1024 * 1024) {
+                      alert("Image size must be less than 5 MB.");
+                      return;
+                    }
+
+                    setImageFile(file);
+
+                  }}
+                  className="hidden"
+                />
+
+                <label
+                  htmlFor="avatar"
+                  className="absolute bottom-1 right-1 bg-red-600 hover:bg-red-700 hover:scale-110 transition-all duration-200 text-white w-10 h-10 rounded-full flex items-center justify-center cursor-pointer shadow-lg"
+                >
+
+                  <FaCamera size={18} />
+                
+                </label>
+              </>
+            )}
+
+          </div>
+           
 
         </div>
 
@@ -173,14 +335,29 @@ export default function ProfilePage() {
               District
             </label>
 
-            <input
-              type="text"
-              name="district"
-              value={formData.district}
-              onChange={handleChange}
+            <select
+              value={
+                districts.find(
+                  (d) => d.name === formData.district
+                )?.id || ""
+              }
+              onChange={handleDistrictChange}
               disabled={!isEditing}
               className="w-full border rounded-xl p-3"
-            />
+            >
+              <option value="">
+                Select District
+              </option>
+
+              {districts.map((district) => (
+                <option
+                  key={district.id}
+                  value={district.id}
+                >
+                  {district.name}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div>
@@ -188,14 +365,26 @@ export default function ProfilePage() {
               Upazila
             </label>
 
-            <input
-              type="text"
+            <select
               name="upazila"
               value={formData.upazila}
               onChange={handleChange}
               disabled={!isEditing}
               className="w-full border rounded-xl p-3"
-            />
+            >
+              <option value="">
+                Select Upazila
+              </option>
+
+              {upazilas.map((upazila) => (
+                <option
+                  key={upazila.id}
+                  value={upazila.name}
+                >
+                  {upazila.name}
+                </option>
+              ))}
+            </select>
           </div>
 
         </div>

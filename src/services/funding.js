@@ -26,3 +26,20 @@ export const createFunding =
 
     return res.json();
   };
+
+  export const createCheckoutSession =
+  async (data) => {
+    const res = await fetch(
+      `${API_URL}/create-checkout-session`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type":
+            "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+
+    return res.json();
+  };

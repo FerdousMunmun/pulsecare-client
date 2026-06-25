@@ -74,3 +74,28 @@ export const updateUserProfile =
 
     return res.json();
   };
+
+
+  export const searchDonors = async (
+  bloodGroup,
+  district,
+  upazila
+) => {
+  const params = new URLSearchParams();
+
+  if (bloodGroup) params.append("bloodGroup", bloodGroup);
+  if (district) params.append("district", district);
+  if (upazila) params.append("upazila", upazila);
+
+  console.log("API:", `${API_URL}/search-donors?${params.toString()}`);
+
+  const res = await fetch(
+    `${API_URL}/search-donors?${params.toString()}`
+  );
+
+  const data = await res.json();
+
+  console.log("Response:", data);
+
+  return data;
+}
