@@ -29,13 +29,11 @@ const Navbar = () => {
   };
   return (
     <div>
-      <div className="bg-black p-1 text-white">
-        <marquee>
-          🎉 Avail Up to 4% Extra Discount with Bank Transfer | 💳 Cash on
-          Delivery Available | 🚚 Fast Delivery in 2–3 Days.
-        </marquee>
-      </div>
-
+   <div className="bg-gradient-to-r from-red-600 via-red-500 to-red-600 text-white py-2 text-sm font-medium">
+  <marquee>
+    💙 Welcome to PulseCare • 🩸 Donate Blood, Save Lives • 👨‍⚕️ Verified Donor Network • 🚑 24/7 Emergency Blood Support • 🌍 Together We Build a Healthier Community
+  </marquee>
+</div>
       <nav className="sticky top-0 z-40 w-full border-b border-separator bg-background/70 backdrop-blur-lg">
         <header className="mx-auto flex h-16 max-w-7xl items-center justify-between px-2">
           <div className="flex items-center gap-4">
@@ -71,29 +69,29 @@ const Navbar = () => {
             </button>
             <Link href={'/'}>
               <div className="flex items-center gap-3">
-                <LuHeartPulse className=" text-3xl text-red-800 pt-1" />
-                <p className="text-2xl font-bold text-yellow-500">Pulse
-                  <span className="text-3xl font-bold text-red-800">Care</span>
+                <LuHeartPulse className=" text-3xl text-red-600 pt-1" />
+                <p className="text-2xl font-bold text-yellow-400">Pulse
+                  <span className="text-3xl font-bold text-red-500">Care</span>
                 </p>
               </div>
             </Link>
           </div>
           <ul className="hidden items-center gap-4 md:flex">
 
-            <li className="hover:text-red-800 font-medium text-medium">
+            <li className="hover:text-red-600 font-medium text-medium">
               <Link href="/">Home</Link>
             </li>
             <li>
               <Link
                 href="/donation-requests"
-                className="hover:text-red-800 font-medium text-medium"
+                className="hover:text-red-600 font-medium text-medium"
                 aria-current="page"
               >
                 Donation Requests
               </Link>
             </li>
 
-            <li className="hover:text-red-800 font-medium text-medium">
+            <li className="hover:text-red-600 font-medium text-medium">
               <Link href="/funding">Funding</Link>
             </li>
           </ul>

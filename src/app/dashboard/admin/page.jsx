@@ -5,6 +5,9 @@ from "@/services/dashboard";
 
 export default async function AdminHomePage() {
   const requests = await getDonationRequests();
+
+  console.log("Requests:", requests);
+console.log(Array.isArray(requests));
 const users = await getUsers();
 const stats =
   await getDashboardStats();

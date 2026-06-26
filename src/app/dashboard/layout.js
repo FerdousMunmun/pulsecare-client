@@ -13,7 +13,7 @@ export default function DashboardLayout({ children}) {
         <div className="flex-1 overflow-y-auto">
            
           {/* navbar */}
-           <div className="  mt-4 w-full font-bold text-red-800">Dashboard</div>
+           <div className="  mt-4 w-full font-bold text-red-600">Dashboard</div>
           <main className="p-5">
            {children}</main>
         </div>

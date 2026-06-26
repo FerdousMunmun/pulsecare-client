@@ -18,25 +18,47 @@ import React from "react";
 
 export default function SignInPage() {
   const onSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const formData = new FormData(e.currentTarget);
-  const user = Object.fromEntries(formData.entries());
+    const formData = new FormData(e.currentTarget);
+    const user = Object.fromEntries(formData.entries());
 
-  try {
-    const result =
-      await authClient.signIn.email({
-        email: user.email,
-        password: user.password,
-        callbackURL: "/dashboard",
-      });
+    try {
 
-    console.log(result);
-  } catch (error) {
-    console.log(error);
-    alert("Invalid email or password");
-  }
-};
+      const result =
+        await authClient.signIn.email({
+          email: user.email,
+          password: user.password,
+          callbackURL: "/dashboard",
+        });
+
+      if (result?.error) {
+        alert(result.error.message);
+        return;
+      }
+
+      await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/jwt`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            email: user.email,
+          }),
+        }
+      );
+
+    } catch (error) {
+
+      console.log(error);
+
+      alert("Invalid email or password");
+
+    }
+  };
   return (
     <div className="flex items-center justify-center rounded-3xl bg-surface p-6 max-w-2xl mx-auto border mt-5">
       <Surface className="w-full">
@@ -44,8 +66,8 @@ export default function SignInPage() {
           <Fieldset className="w-full">
             <Fieldset.Legend className="font-bold text-center">Login</Fieldset.Legend>
             <Description className="text-center">
-  Login with your email and password
-</Description>
+              Login with your email and password
+            </Description>
             <Fieldset.Group>
               <TextField isRequired name="email" type="email">
                 <Label>Email</Label>
@@ -65,14 +87,14 @@ export default function SignInPage() {
             </Button>
 
             <p className="text-center mt-4">
-  Don't have an account?{" "}
-  <a
-    href="/registration"
-    className="text-red-600 font-semibold hover:underline"
-  >
-    Registration
-  </a>
-</p>
+              Don't have an account?{" "}
+              <a
+                href="/registration"
+                className="text-red-600 font-semibold hover:underline"
+              >
+                Registration
+              </a>
+            </p>
           </Fieldset>
         </Form>
       </Surface>

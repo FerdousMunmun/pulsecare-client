@@ -1,10 +1,13 @@
 
 
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const getUsers = async () => {
-  const res = await fetch(`${API_URL}/users`);
+  const res = await fetch(`${API_URL}/users`, {
+    credentials: "include",
+  });
+
   return res.json();
 };
 
@@ -16,6 +19,7 @@ export const updateUserRole = async (
     `${API_URL}/users/${id}/role`,
     {
       method: "PATCH",
+      credentials: "include",
       headers: {
         "Content-Type":
           "application/json",
@@ -33,6 +37,7 @@ export const updateUserStatus =
       `${API_URL}/users/${id}/status`,
       {
         method: "PATCH",
+        credentials: "include",
         headers: {
           "Content-Type":
             "application/json",
@@ -46,7 +51,7 @@ export const updateUserStatus =
     return res.json();
   };
 
-  export const getUserProfile = async (
+export const getUserProfile = async (
   email
 ) => {
   const res = await fetch(
@@ -62,6 +67,7 @@ export const updateUserProfile =
       `${API_URL}/users/${id}`,
       {
         method: "PATCH",
+        credentials: "include",
         headers: {
           "Content-Type":
             "application/json",
@@ -76,7 +82,7 @@ export const updateUserProfile =
   };
 
 
-  export const searchDonors = async (
+export const searchDonors = async (
   bloodGroup,
   district,
   upazila

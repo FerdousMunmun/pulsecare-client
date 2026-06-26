@@ -2,11 +2,23 @@
 
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { getStatistics } from "@/services/dashboard";
 
 export default function HeroSection() {
+
+  const [stats, setStats] = useState({
+  activeDonors: 0,
+  bloodDonations: 0,
+  bloodRequests: 0,
+});
+
+useEffect(() => {
+  getStatistics().then(setStats);
+}, []);
   return (
     <section
-      className="relative min-h-screen bg-cover bg-center"
+       className="relative min-h-screen bg-cover bg-center mt-24 py-16"
       style={{
         backgroundImage:
           "url('https://images.unsplash.com/photo-1615461066841-6116e61058f4?q=80&w=2070&auto=format&fit=crop')",
@@ -16,7 +28,7 @@ export default function HeroSection() {
       <div className="absolute inset-0 bg-black/60"></div>
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center text-center min-h-screen px-6">
+     <div className="relative z-10 flex flex-col items-center justify-center text-center min-h-[80vh] px-6 pb-36">
         
         <div className="bg-white/10 backdrop-blur-md px-4 py-2 rounded-full text-white text-sm mb-6">
           ❤️ Trusted by 100+ Blood Donors
@@ -25,7 +37,7 @@ export default function HeroSection() {
         <h1 className="text-5xl md:text-7xl font-extrabold text-white leading-tight max-w-5xl">
           Saving Lives,
           <br />
-          <span className="text-red-800">One Drop</span> at a Time
+          <span className="text-red-600">One Drop</span> at a Time
         </h1>
 
         <p className="text-gray-200 text-lg md:text-xl mt-6 max-w-3xl">
@@ -37,7 +49,7 @@ export default function HeroSection() {
         <div className="flex flex-col md:flex-row gap-4 mt-10">
           
           <Link href="/registration">
-            <button className="bg-red-800 hover:bg-red-700 text-white px-8 py-4 rounded-xl font-semibold transition">
+            <button className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-xl font-semibold transition">
               Become a Donor →
             </button>
           </Link>
@@ -52,21 +64,21 @@ export default function HeroSection() {
       </div>
 
       {/* Stats Cards */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 w-full max-w-5xl px-6">
+      <div className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-full max-w-6xl px-6 z-20 pb-7">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           
           <div className="bg-white rounded-3xl p-8 shadow-xl text-center">
-            <h3 className="text-4xl font-bold text-gray-900">150+</h3>
+            <h3 className="text-4xl font-bold text-gray-900">{stats.activeDonors}+</h3>
             <p className="text-gray-500 mt-2">Active Donors</p>
           </div>
 
           <div className="bg-white rounded-3xl p-8 shadow-xl text-center border-2 border-red-500">
-            <h3 className="text-4xl font-bold text-red-800">1,200+</h3>
+            <h3 className="text-4xl font-bold text-red-600">{stats.bloodDonations}+</h3>
             <p className="text-gray-500 mt-2">Blood Donations</p>
           </div>
 
           <div className="bg-white rounded-3xl p-8 shadow-xl text-center">
-            <h3 className="text-4xl font-bold text-gray-900">300+</h3>
+            <h3 className="text-4xl font-bold text-gray-900">{stats.bloodRequests}+</h3>
             <p className="text-gray-500 mt-2">Blood Requests</p>
           </div>
 

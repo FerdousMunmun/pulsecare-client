@@ -20,7 +20,7 @@ export default function Footer() {
     }
   
   return (
-    <footer className="bg-red-800 text-white py-12">
+    <footer className="bg-red-600 text-white py-12">
   <div className="max-w-7xl mx-auto px-6">
 
     <div className="grid md:grid-cols-4 gap-8">
@@ -30,7 +30,7 @@ export default function Footer() {
           PulseCare
         </h3>
 
-        <p className="text-gray-400">
+        <p className="text-white">
           Connecting blood donors with recipients
           to save lives across Bangladesh.
         </p>

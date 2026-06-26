@@ -3,6 +3,10 @@
 import { useEffect, useState } from "react";
 import { authClient } from "@/lib/auth-client";
 import {
+  getDistricts,
+  getUpazilas,
+} from "@/services/distric";
+import {
   createDonationRequest,
 } from "@/services/donationRequest";
 
@@ -33,12 +37,27 @@ setSession(res.data);
 }, []);
 
 // Load Districts
+// useEffect(() => {
+// fetch("http://localhost:5000/districts")
+// .then((res) => res.json())
+// .then((data) => {
+// setDistricts(data);
+// });
+// }, []);
+
+
+
 useEffect(() => {
-fetch("http://localhost:5000/districts")
-.then((res) => res.json())
-.then((data) => {
-setDistricts(data);
-});
+  const loadDistricts = async () => {
+    try {
+      const data = await getDistricts();
+      setDistricts(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  loadDistricts();
 }, []);
 
 // Handle Input Change
@@ -50,31 +69,56 @@ setFormData({
 };
 
 // District Change
+// const handleDistrictChange = async (e) => {
+// const districtId = e.target.value;
+
+
+// setSelectedDistrictId(districtId);
+
+// const selectedDistrict = districts.find(
+//   (district) => district.id === districtId
+// );
+
+// setFormData({
+//   ...formData,
+//   recipientDistrict: selectedDistrict?.name || "",
+//   recipientUpazila: "",
+// });
+
+// const res = await fetch(
+//   `http://localhost:5000/districts/${districtId}/upazilas`
+// );
+
+// const data = await res.json();
+
+// setUpazilas(data);
+
+
+// };
+
+
+
 const handleDistrictChange = async (e) => {
-const districtId = e.target.value;
+  const districtId = e.target.value;
 
+  setSelectedDistrictId(districtId);
 
-setSelectedDistrictId(districtId);
+  const selectedDistrict = districts.find(
+    (district) => district.id === districtId
+  );
 
-const selectedDistrict = districts.find(
-  (district) => district.id === districtId
-);
+  setFormData({
+    ...formData,
+    recipientDistrict: selectedDistrict?.name || "",
+    recipientUpazila: "",
+  });
 
-setFormData({
-  ...formData,
-  recipientDistrict: selectedDistrict?.name || "",
-  recipientUpazila: "",
-});
-
-const res = await fetch(
-  `http://localhost:5000/districts/${districtId}/upazilas`
-);
-
-const data = await res.json();
-
-setUpazilas(data);
-
-
+  try {
+    const data = await getUpazilas(districtId);
+    setUpazilas(data);
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 // Submit

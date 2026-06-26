@@ -11,6 +11,10 @@ import {
   Surface,
   TextField,
 } from "@heroui/react";
+import {
+  getDistricts,
+  getUpazilas,
+} from "@/services/distric";
 
 export default function RegistrationPage() {
   const [districts, setDistricts] = useState([]);
@@ -19,31 +23,64 @@ export default function RegistrationPage() {
   const [districtName, setDistrictName] = useState("");
 
   // Load Districts
+  // useEffect(() => {
+  //   fetch("http://localhost:5000/districts")
+  //     .then((res) => res.json())
+  //     .then((data) => setDistricts(data))
+  //     .catch((err) => console.log(err));
+  // }, []);
+  
+
+
   useEffect(() => {
-    fetch("http://localhost:5000/districts")
-      .then((res) => res.json())
-      .then((data) => setDistricts(data))
-      .catch((err) => console.log(err));
-  }, []);
-
-  // Load Upazilas
-  const handleDistrictChange = async (e) => {
-    const districtId = e.target.value;
-
-    const selectedDistrict = districts.find(
-      (district) => district.id === districtId
-    );
-
-    setDistrictName(selectedDistrict?.name || "");
-
-    const res = await fetch(
-      `http://localhost:5000/districts/${districtId}/upazilas`
-    );
-
-    const data = await res.json();
-
-    setUpazilas(data);
+  const loadDistricts = async () => {
+    try {
+      const data = await getDistricts();
+      setDistricts(data);
+    } catch (err) {
+      console.log(err);
+    }
   };
+
+  loadDistricts();
+}, []);
+  // Load Upazilas
+  // const handleDistrictChange = async (e) => {
+  //   const districtId = e.target.value;
+
+  //   const selectedDistrict = districts.find(
+  //     (district) => district.id === districtId
+  //   );
+
+  //   setDistrictName(selectedDistrict?.name || "");
+
+  //   const res = await fetch(
+  //     `http://localhost:5000/districts/${districtId}/upazilas`
+  //   );
+
+  //   const data = await res.json();
+
+  //   setUpazilas(data);
+  // };
+
+
+
+  const handleDistrictChange = async (e) => {
+  const districtId = e.target.value;
+
+  const selectedDistrict = districts.find(
+    (district) => district.id === districtId
+  );
+
+  setDistrictName(selectedDistrict?.name || "");
+
+  try {
+    const data = await getUpazilas(districtId);
+    setUpazilas(data);
+  } catch (err) {
+    console.log(err);
+  }
+};
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -106,6 +143,21 @@ export default function RegistrationPage() {
         alert(result.error.message);
         return;
       }
+
+
+
+await fetch(`${process.env.NEXT_PUBLIC_API_URL}/jwt`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  credentials: "include",
+  body: JSON.stringify({
+    email: formData.get("email"),
+  }),
+});
+
+
 
       alert("Registration Successful");
 
@@ -170,7 +222,7 @@ if (role === "donor") {
                   <option value="">Select Role</option>
                   <option value="donor">Donor</option>
                   <option value="volunteer">Volunteer</option>
-                  <option value="admin">Admin</option>
+                  
                 </select>
               </div>
 

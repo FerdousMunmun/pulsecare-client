@@ -4,7 +4,10 @@ const API_URL =
 export const getFundings =
   async () => {
     const res = await fetch(
-      `${API_URL}/fundings`
+      `${API_URL}/fundings`,
+      {
+        credentials: "include",
+      }
     );
 
     return res.json();
@@ -16,6 +19,7 @@ export const createFunding =
       `${API_URL}/fundings`,
       {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type":
             "application/json",
@@ -27,7 +31,7 @@ export const createFunding =
     return res.json();
   };
 
-  export const createCheckoutSession =
+export const createCheckoutSession =
   async (data) => {
     const res = await fetch(
       `${API_URL}/create-checkout-session`,
