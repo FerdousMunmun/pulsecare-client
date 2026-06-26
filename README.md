@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# PulseCare
 
-## Getting Started
+## Purpose
 
-First, run the development server:
+PulseCare is a full-stack blood donation management platform that connects blood donors with recipients. Users can search for donors, create and manage blood donation requests, make funding donations through Stripe, and access role-based dashboards for donors, volunteers, and administrators.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Live URL
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Frontend: https://your-frontend-url.vercel.app
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Backend: https://pulsecare-server.vercel.app
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Key Features
 
-## Learn More
+- JWT-based authentication and protected APIs
+- Role-based dashboard for Admin, Donor, and Volunteer
+- Create, update, delete, and manage blood donation requests
+- Search donors by blood group, district, and upazila
+- Donate to blood requests and update donation status
+- Stripe payment integration for funding
+- Dynamic dashboard statistics
+- Responsive user interface for desktop and mobile devices
 
-To learn more about Next.js, take a look at the following resources:
+## NPM Packages Used
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Frontend
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- next
+- react
+- react-dom
+- tailwindcss
+- react-icons
+- better-auth
+- sweetalert2
+- react-hook-form
+- zod
+- @hookform/resolvers
 
-## Deploy on Vercel
+### Backend
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- express
+- mongodb
+- cors
+- dotenv
+- jsonwebtoken
+- cookie-parser
+- stripe
