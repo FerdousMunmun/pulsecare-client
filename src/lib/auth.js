@@ -24,10 +24,8 @@ export const auth = betterAuth({
           type: "string",
         defaultValue: "donor" //Doner,volunteer,admin
       },
-      plan:{
-          type: "string",
-        defaultValue: 'free' //free,pro
-      },status: {
+      
+      status: {
   type: "string",
   defaultValue: "active",
 },

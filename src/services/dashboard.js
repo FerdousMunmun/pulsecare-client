@@ -3,8 +3,7 @@ const API_URL =
 
 export const getDashboardStats =
   async () => {
-      console.log("Dashboard API Called");
-
+     
     const res = await fetch(
       `${API_URL}/dashboard-stats`,
       {
@@ -12,7 +11,7 @@ export const getDashboardStats =
          
       }
     );
-  console.log(res.status);
+  
     return res.json();
   };
 
