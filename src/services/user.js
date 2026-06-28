@@ -1,11 +1,18 @@
+import { authClient } from "@/lib/auth-client";
 
 
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const getUsers = async () => {
+
+const { data: token } = await authClient.token();
+  
   const res = await fetch(`${API_URL}/users`, {
-    credentials: "include",
+    headers: {
+  authorization: `Bearer ${token?.token}`,
+}
+    
   });
 
   return res.json();
@@ -15,14 +22,16 @@ export const updateUserRole = async (
   id,
   role
 ) => {
+  const { data: token } = await authClient.token();
   const res = await fetch(
     `${API_URL}/users/${id}/role`,
     {
       method: "PATCH",
-      credentials: "include",
+      
       headers: {
         "Content-Type":
           "application/json",
+            authorization: `Bearer ${token?.token}`,
       },
       body: JSON.stringify({ role }),
     }
@@ -33,14 +42,16 @@ export const updateUserRole = async (
 
 export const updateUserStatus =
   async (id, status) => {
+    const { data: token } = await authClient.token();
     const res = await fetch(
       `${API_URL}/users/${id}/status`,
       {
         method: "PATCH",
-        credentials: "include",
+        
         headers: {
           "Content-Type":
             "application/json",
+            authorization: `Bearer ${token?.token}`,
         },
         body: JSON.stringify({
           status,
@@ -63,14 +74,16 @@ export const getUserProfile = async (
 
 export const updateUserProfile =
   async (id, updatedData) => {
+    const { data: token } = await authClient.token();
     const res = await fetch(
       `${API_URL}/users/${id}`,
       {
         method: "PATCH",
-        credentials: "include",
+       
         headers: {
           "Content-Type":
             "application/json",
+            authorization: `Bearer ${token?.token}`,
         },
         body: JSON.stringify(
           updatedData

@@ -1,13 +1,15 @@
+import { authClient } from "@/lib/auth-client";
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const getDonationRequests =
   async () => {
     const res = await fetch(
       `${API_URL}/donation-requests`,
-       {
-      credentials: "include",
-      cache: "no-store",
-    }
+      {
+
+        cache: "no-store",
+      }
     );
 
     return res.json();
@@ -15,15 +17,17 @@ export const getDonationRequests =
 
 export const createDonationRequest =
   async (data) => {
+    const { data: token } = await authClient.token()
     const res = await fetch(
       `${API_URL}/donation-requests`,
       {
         method: "POST",
 
-        credentials: "include",
+
         headers: {
           "Content-Type":
             "application/json",
+          authorization: `Bearer ${token?.token}`
         },
         body: JSON.stringify(data),
       }
@@ -34,12 +38,15 @@ export const createDonationRequest =
 
 
 export const deleteDonationRequest = async (id) => {
+  const { data: token } = await authClient.token()
   const res = await fetch(
     `${API_URL}/donation-requests/${id}`,
     {
       method: "DELETE",
+      headers: {
+        authorization: `Bearer ${token?.token}`
+      }
 
-      credentials: "include",
     }
   );
 
@@ -50,8 +57,16 @@ export const deleteDonationRequest = async (id) => {
 export const getDonationRequestById = async (
   id
 ) => {
+  const { data: token } = await authClient.token()
   const res = await fetch(
-    `${API_URL}/donation-requests/${id}`
+    `${API_URL}/donation-requests/${id}`,
+    {
+       headers: {
+        authorization: `Bearer ${token?.token}`
+      }
+
+    }
+    
   );
 
   return res.json();
@@ -62,15 +77,17 @@ export const updateDonationRequest = async (
   id,
   data
 ) => {
+  const { data: token } = await authClient.token()
   const res = await fetch(
     `${API_URL}/donation-requests/${id}`,
     {
       method: "PATCH",
 
-      credentials: "include",
+
       headers: {
         "Content-Type":
           "application/json",
+          authorization: `Bearer ${token?.token}`
       },
       body: JSON.stringify(data),
     }
@@ -82,17 +99,19 @@ export const updateDonationRequest = async (
 
 export const donateRequest =
   async (id, donorInfo) => {
+    const { data: token } = await authClient.token()
 
     const res = await fetch(
       `${API_URL}/donation-requests/${id}/donate`,
       {
         method: "PATCH",
 
-        credentials: "include",
+
 
         headers: {
           "Content-Type":
             "application/json",
+            authorization: `Bearer ${token?.token}`
         },
 
         body: JSON.stringify(donorInfo),
@@ -105,13 +124,18 @@ export const donateRequest =
 
 export const getMyDonationRequests =
   async (email) => {
+    const { data: token } = await authClient.token();
 
     const res =
       await fetch(
         `${API_URL}/my-donation-requests/${email}`,
-         {
-    credentials: "include",
-  }
+    {
+       headers: {
+          
+            authorization: `Bearer ${token?.token}`
+        },
+    }
+
       );
 
 

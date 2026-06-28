@@ -8,8 +8,6 @@ export default function Home() {
   return (
     <div className="">
       <HeroSection/>
-
-      
       <div className="mt-24">
 <FeaturedSection/>
       </div>

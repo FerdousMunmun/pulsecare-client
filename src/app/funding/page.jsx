@@ -10,19 +10,17 @@ import { useEffect, useState } from "react";
 import {
     getFundings,
     createFunding,
+    createCheckoutSession,
 } from "@/services/funding";
 
 
-import {
-  createCheckoutSession,
 
-} from "@/services/funding";
 import FundingModal from "@/components/FundingModel";
 import { authClient } from "@/lib/auth-client";
 
 export default function FundingPage() {
 
-
+    const [isOpen, setIsOpen] = useState(false);
     const { data: session } =
         authClient.useSession();
 
@@ -31,8 +29,7 @@ export default function FundingPage() {
     const [fundings, setFundings] =
         useState([]);
 
-    const [isOpen, setIsOpen] =
-        useState(false);
+
 
     useEffect(() => {
         loadFundings();
@@ -45,36 +42,12 @@ export default function FundingPage() {
 
             setFundings(data);
         };
-
-  const handleFunding =
-  async (amount) => {
-
-    localStorage.setItem(
-      "fundingInfo",
-      JSON.stringify({
-        userName:
-          user?.name,
-
-        userEmail:
-          user?.email,
-
-        amount:
-          Number(amount),
-      })
-    );
-
-    const data =
-      await createCheckoutSession({
-        amount:
-          Number(amount),
-
-        email:
-          user?.email,
-      });
-
-    window.location.href =
-      data.url;
-  };
+    
+const handleFunding = async (amount) => { 
+   const data = await createCheckoutSession({
+  amount: Number(amount),
+}); 
+    if (data.url) { window.location.href = data.url; } };
 
     return (
         <div className="max-w-7xl mx-auto p-8">
@@ -84,15 +57,13 @@ export default function FundingPage() {
                 <h1 className="text-4xl font-bold text-red-700">
                     Funding History
                 </h1>
-
                 <button
-                    onClick={() =>
-                        setIsOpen(true)
-                    }
+                    onClick={() => setIsOpen(true)}
                     className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-semibold"
                 >
                     Give Fund
                 </button>
+
 
             </div>
 

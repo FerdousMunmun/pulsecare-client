@@ -13,6 +13,7 @@ import {
 export default function AllUsersPage() {
   const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [openMenuId, setOpenMenuId] = useState(null);
 
   const usersPerPage = 10;
 
@@ -140,69 +141,68 @@ export default function AllUsersPage() {
 
                 <td className="p-4 text-center relative">
 
-                  <details className="inline-block">
+                 <button
+  onClick={() =>
+    setOpenMenuId(
+      openMenuId === user._id
+        ? null
+        : user._id
+    )
+  }
+  className="text-2xl font-bold px-2"
+>
+  ⋮
+</button>
 
-                    <summary className="cursor-pointer list-none text-2xl font-bold px-2">
-                      ⋮
-                    </summary>
+{openMenuId === user._id && (
+  <div className="absolute right-5 mt-2 w-48 bg-white border rounded-xl shadow-lg z-50 overflow-hidden">
 
-                    <div className="absolute right-5 mt-2 w-48 bg-white border rounded-xl shadow-lg z-50 overflow-hidden">
+    {user.status === "blocked" ? (
+      <button
+        onClick={() => {
+          handleStatusChange(user._id, "active");
+          setOpenMenuId(null);
+        }}
+        className="block w-full text-left px-4 py-3 hover:bg-gray-100"
+      >
+        Unblock User
+      </button>
+    ) : (
+      <button
+        onClick={() => {
+          handleStatusChange(user._id, "blocked");
+          setOpenMenuId(null);
+        }}
+        className="block w-full text-left px-4 py-3 hover:bg-gray-100"
+      >
+        Block User
+      </button>
+    )}
 
-                      {user.status === "blocked" ? (
-                        <button
-                          onClick={() =>
-                            handleStatusChange(
-                              user._id,
-                              "active"
-                            )
-                          }
-                          className="block w-full text-left px-4 py-3 hover:bg-gray-100"
-                        >
-                          Unblock User
-                        </button>
-                      ) : (
-                        <button
-                          onClick={() =>
-                            handleStatusChange(
-                              user._id,
-                              "blocked"
-                            )
-                          }
-                          className="block w-full text-left px-4 py-3 hover:bg-gray-100"
-                        >
-                          Block User
-                        </button>
-                      )}
+    {user.role === "admin" ? (
+      <button
+        onClick={() => {
+          handleRoleChange(user._id, "volunteer");
+          setOpenMenuId(null);
+        }}
+        className="block w-full text-left px-4 py-3 hover:bg-gray-100"
+      >
+        Make Volunteer
+      </button>
+    ) : (
+      <button
+        onClick={() => {
+          handleRoleChange(user._id, "admin");
+          setOpenMenuId(null);
+        }}
+        className="block w-full text-left px-4 py-3 hover:bg-gray-100"
+      >
+        Make Admin
+      </button>
+    )}
 
-                      {user.role === "admin" ? (
-                        <button
-                          onClick={() =>
-                            handleRoleChange(
-                              user._id,
-                              "volunteer"
-                            )
-                          }
-                          className="block w-full text-left px-4 py-3 hover:bg-gray-100"
-                        >
-                          Make Volunteer
-                        </button>
-                      ) : (
-                        <button
-                          onClick={() =>
-                            handleRoleChange(
-                              user._id,
-                              "admin"
-                            )
-                          }
-                          className="block w-full text-left px-4 py-3 hover:bg-gray-100"
-                        >
-                          Make Admin
-                        </button>
-                      )}
-
-                    </div>
-
-                  </details>
+  </div>
+)}
 
                 </td>
 

@@ -36,14 +36,7 @@ setSession(res.data);
 });
 }, []);
 
-// Load Districts
-// useEffect(() => {
-// fetch("http://localhost:5000/districts")
-// .then((res) => res.json())
-// .then((data) => {
-// setDistricts(data);
-// });
-// }, []);
+
 
 
 
@@ -68,33 +61,7 @@ setFormData({
 });
 };
 
-// District Change
-// const handleDistrictChange = async (e) => {
-// const districtId = e.target.value;
 
-
-// setSelectedDistrictId(districtId);
-
-// const selectedDistrict = districts.find(
-//   (district) => district.id === districtId
-// );
-
-// setFormData({
-//   ...formData,
-//   recipientDistrict: selectedDistrict?.name || "",
-//   recipientUpazila: "",
-// });
-
-// const res = await fetch(
-//   `http://localhost:5000/districts/${districtId}/upazilas`
-// );
-
-// const data = await res.json();
-
-// setUpazilas(data);
-
-
-// };
 
 
 

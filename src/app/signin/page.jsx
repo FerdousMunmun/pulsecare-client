@@ -37,19 +37,19 @@ export default function SignInPage() {
         return;
       }
 
-      await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/jwt`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify({
-            email: user.email,
-          }),
-        }
-      );
+      // await fetch(
+      //   `${process.env.NEXT_PUBLIC_API_URL}/jwt`,
+      //   {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     credentials: "include",
+      //     body: JSON.stringify({
+      //       email: user.email,
+      //     }),
+      //   }
+      // );
 
     } catch (error) {
 

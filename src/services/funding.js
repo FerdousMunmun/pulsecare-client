@@ -1,13 +1,19 @@
+import { authClient } from "@/lib/auth-client";
+
 const API_URL =
   process.env.NEXT_PUBLIC_API_URL;
 
 export const getFundings =
   async () => {
+    const { data: token } = await authClient.token();
     const res = await fetch(
       `${API_URL}/fundings`,
       {
-        credentials: "include",
-      }
+    headers: {
+      authorization: `Bearer ${token?.token}`,
+    },
+  }
+
     );
 
     return res.json();
@@ -15,14 +21,16 @@ export const getFundings =
 
 export const createFunding =
   async (data) => {
+    const { data: token } = await authClient.token();
     const res = await fetch(
       `${API_URL}/fundings`,
       {
         method: "POST",
-        credentials: "include",
+
         headers: {
           "Content-Type":
             "application/json",
+            authorization: `Bearer ${token?.token}`,
         },
         body: JSON.stringify(data),
       }
@@ -34,7 +42,7 @@ export const createFunding =
 export const createCheckoutSession =
   async (data) => {
     const res = await fetch(
-      `${API_URL}/create-checkout-session`,
+      "/api/subscription",
       {
         method: "POST",
         headers: {
@@ -47,3 +55,15 @@ export const createCheckoutSession =
 
     return res.json();
   };
+
+export const subscription = async (data) => {
+  const res = await fetch(`${API_URL}/subscription`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  return res.json();
+};

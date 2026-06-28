@@ -22,65 +22,43 @@ export default function RegistrationPage() {
   const [loading, setLoading] = useState(false);
   const [districtName, setDistrictName] = useState("");
 
-  // Load Districts
-  // useEffect(() => {
-  //   fetch("http://localhost:5000/districts")
-  //     .then((res) => res.json())
-  //     .then((data) => setDistricts(data))
-  //     .catch((err) => console.log(err));
-  // }, []);
-  
+
+
 
 
   useEffect(() => {
-  const loadDistricts = async () => {
-    try {
-      const data = await getDistricts();
-      setDistricts(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    const loadDistricts = async () => {
+      try {
+        const data = await getDistricts();
+        console.log("Districts:", data);
+        setDistricts(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
 
-  loadDistricts();
-}, []);
-  // Load Upazilas
-  // const handleDistrictChange = async (e) => {
-  //   const districtId = e.target.value;
+    loadDistricts();
+  }, []);
 
-  //   const selectedDistrict = districts.find(
-  //     (district) => district.id === districtId
-  //   );
-
-  //   setDistrictName(selectedDistrict?.name || "");
-
-  //   const res = await fetch(
-  //     `http://localhost:5000/districts/${districtId}/upazilas`
-  //   );
-
-  //   const data = await res.json();
-
-  //   setUpazilas(data);
-  // };
 
 
 
   const handleDistrictChange = async (e) => {
-  const districtId = e.target.value;
+    const districtId = e.target.value;
 
-  const selectedDistrict = districts.find(
-    (district) => district.id === districtId
-  );
+    const selectedDistrict = districts.find(
+      (district) => district.id === districtId
+    );
 
-  setDistrictName(selectedDistrict?.name || "");
+    setDistrictName(selectedDistrict?.name || "");
 
-  try {
-    const data = await getUpazilas(districtId);
-    setUpazilas(data);
-  } catch (err) {
-    console.log(err);
-  }
-};
+    try {
+      const data = await getUpazilas(districtId);
+      setUpazilas(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -131,7 +109,7 @@ export default function RegistrationPage() {
 
         image: imageUrl,
 
-         role: formData.get("role"),
+        role: formData.get("role"),
         status: "active",
 
         bloodGroup: formData.get("bloodGroup"),
@@ -146,32 +124,23 @@ export default function RegistrationPage() {
 
 
 
-await fetch(`${process.env.NEXT_PUBLIC_API_URL}/jwt`, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  credentials: "include",
-  body: JSON.stringify({
-    email: formData.get("email"),
-  }),
-});
+
 
 
 
       alert("Registration Successful");
 
-     const role = formData.get("role");
+      const role = formData.get("role");
 
-if (role === "donor") {
-  window.location.href =
-    "/dashboard/donor";
-} else if (
-  role === "volunteer"
-) {
-  window.location.href =
-    "/dashboard/volunteer";
-}
+      if (role === "donor") {
+        window.location.href =
+          "/dashboard/donor";
+      } else if (
+        role === "volunteer"
+      ) {
+        window.location.href =
+          "/dashboard/volunteer";
+      }
     } catch (error) {
       console.log(error);
       alert("Something went wrong");
@@ -222,12 +191,12 @@ if (role === "donor") {
                   <option value="">Select Role</option>
                   <option value="donor">Donor</option>
                   <option value="volunteer">Volunteer</option>
-                  
+
                 </select>
               </div>
 
               <div>
-                <Label>Avatar</Label>
+                <Label>Image</Label>
 
                 <input
                   type="file"
