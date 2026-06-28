@@ -147,7 +147,7 @@ export default function RegistrationPage() {
     } finally {
       setLoading(false);
     }
-    console.log(result);
+    
   };
 
   return (
