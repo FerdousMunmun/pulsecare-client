@@ -57,15 +57,10 @@ export const deleteDonationRequest = async (id) => {
 export const getDonationRequestById = async (
   id
 ) => {
-  const { data: token } = await authClient.token()
+  
   const res = await fetch(
     `${API_URL}/donation-requests/${id}`,
-    {
-       headers: {
-        authorization: `Bearer ${token?.token}`
-      }
-
-    }
+    
     
   );
 
