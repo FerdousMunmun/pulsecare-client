@@ -18,7 +18,7 @@ useEffect(() => {
 }, []);
   return (
     <section
-       className="relative min-h-screen bg-cover bg-center mt-24 py-16"
+       className="relative min-h-screen bg-cover bg-center mt-24"
       style={{
         backgroundImage:
           "url('https://images.unsplash.com/photo-1615461066841-6116e61058f4?q=80&w=2070&auto=format&fit=crop')",
