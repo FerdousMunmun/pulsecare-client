@@ -15,7 +15,7 @@ export default async function DonationDetailsPage({
 
   const request =
     await getDonationRequestById(id);
-
+console.log(request._id);
 
   return (
     <div className="max-w-6xl mx-auto p-8">
