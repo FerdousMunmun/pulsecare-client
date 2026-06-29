@@ -19,7 +19,7 @@ export default function DonateButton({
       
 requestId
 }) {
-console.log("Request ID:", requestId)
+
 
 
 const [open,setOpen]=
@@ -29,12 +29,12 @@ useState(false);
 
 const handleDonate =
 async()=>{
-      console.log("requestId =", requestId);
+      
 
 
 const session =
 await authClient.getSession();
-  console.log(session);
+  
 
 const result =
 await donateRequest(
@@ -48,7 +48,7 @@ session.data.user.email,
 }
 );
 
-  console.log(result);
+ 
 
 
 if(result.modifiedCount>0){
