@@ -59,7 +59,7 @@ export const getDonationRequestById = async (
 ) => {
   
   const res = await fetch(
-    `${API_URL}/donation-requests/${id}/donate`,
+    `${API_URL}/donation-requests/${id}`,
     
     
   );
