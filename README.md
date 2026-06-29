@@ -6,7 +6,7 @@ PulseCare is a full-stack blood donation management platform that connects blood
 
 ## Live URL
 
-Frontend: https://your-frontend-url.vercel.app
+Frontend:https://pulsecare-client.vercel.app
 
 Backend: https://pulsecare-server.vercel.app
 
